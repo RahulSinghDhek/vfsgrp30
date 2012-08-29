@@ -1,5 +1,10 @@
 #include<stdio.h>
+#include "binarySearchTree.h"
 int main()
 {
-	printf("Started");
+	char ch;
+	printf("Enter some Character: ");
+	scanf("%c",&ch);
+	output(ch);
+	return 0;
 }
