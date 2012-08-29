@@ -3,3 +3,5 @@ struct bstNnode{
 	struct bstNode *leftChild;
 	struct bstNode *rightChild;
 };
+
+void output(char);
