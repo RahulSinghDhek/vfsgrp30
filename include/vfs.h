@@ -5,8 +5,8 @@
 #define MAX_BUFFER_SIZE 100
 
 struct mainHeader{
-	char fileSystemLabel[MAX_FILE_SYSTEM_SIZE];
-	int maxNoOfFileDiscriptors;
+	char fileSystemLabel[MAX_FILE_SYSTEM_LABLE_SIZE];
+	int maxNoOfFileDescriptors;
 	int noOfFileDescriptors;
 	struct fileDescriptor *fdHead;
 	struct freeList *listHead;
