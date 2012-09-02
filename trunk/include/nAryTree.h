@@ -1,7 +1,8 @@
-
-struct node {
-  struct task taskinfo;
-  struct node *firstchild;
-  struct node *nextsibling;
+#include "vfs.h"
+struct dirNode {
+  fileDescriptor fileDesc;
+  struct dirNode *firstChild;
+  struct dirNode *rightSibling;
 };
 
+struct dirNode* getNode();
