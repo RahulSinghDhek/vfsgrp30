@@ -6,15 +6,6 @@
 #define MAX_NO_OF_FILE_DESC 10
 #define MAX_FREE_LIST_SIZE 20
 
-struct mainHeader{
-	char fileSystemLabel[MAX_FILE_SYSTEM_LABLE_SIZE];
-	int maxNoOfFileDescriptors;
-	int noOfFileDescriptors;
-	fileDescriptor filedesc[MAX_NO_OF_FILE_DESC];
-	freeList freelist[MAX_FREE_LIST_SIZE];
-};
-
-
 typedef struct fileDes{
 	char fileName[MAX_FILE_NAME_SIZE];
 	char fullPath[MAX_FULL_PATH_SIZE];
@@ -23,12 +14,25 @@ typedef struct fileDes{
 	int locationBlockNo;
 }fileDescriptor;
 
+
 typedef struct freeLis{
 	int blockNo;
 	struct feeList *next;
 }freeList;
 
+
+
 struct block{
 	unsigned char* buffer[MAX_BUFFER_SIZE];
+};
+
+
+
+struct mainHeader{
+	char fileSystemLabel[MAX_FILE_SYSTEM_LABLE_SIZE];
+	int maxNoOfFileDescriptors;
+	int noOfFileDescriptors;
+	fileDescriptor filedesc[MAX_NO_OF_FILE_DESC];
+	freeList freelist[MAX_FREE_LIST_SIZE];
 };
 
