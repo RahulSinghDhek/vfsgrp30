@@ -1,6 +1,6 @@
 #include "vfs.h"
 struct dirNode {
-  fileDescriptor fileDesc;
+  FileDescriptor fileDesc;
   struct dirNode *firstChild;
   struct dirNode *rightSibling;
 };
