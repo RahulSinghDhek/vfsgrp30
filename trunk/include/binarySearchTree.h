@@ -2,7 +2,7 @@
 
 struct node
 {
-	char filepath[path_size];
+	fileDescriptor fileDesc;
 	struct node * left;
 	struct node * right;
 };
