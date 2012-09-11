@@ -28,7 +28,4 @@ void create_vfs(char label[],long systemSize)
 	fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
 }
 
-int main()
-{
-	create_vfs("pandav",40960);
-}
+
