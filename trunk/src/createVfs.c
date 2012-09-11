@@ -9,6 +9,7 @@ void create_vfs(char label[],long systemSize)
 	strcat(lb,".dat");	//add path
 	int i;
 	FILE *fp;
+	MetaHeader metaHeader;
 	
 	vfs_size=systemSize;
 	if((fp=fopen(lb,"wb"))==NULL)
@@ -22,6 +23,9 @@ void create_vfs(char label[],long systemSize)
 			fseek(fp,sizeof(Block)*i,SEEK_SET);
 		}
 	}
+	
+	fseek(fp,0,SEEK_SET);
+	fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
 }
 
 int main()
