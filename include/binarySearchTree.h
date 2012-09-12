@@ -1,18 +1,21 @@
-#define path_size 50
-
-struct node
+# define PATH_SIZE 50
+#include<stdio.h>
+#include<stdlib.h>
+#include "vfs.h"
+#include<string.h>
+struct BSTnode
 {
-	fileDescriptor fileDesc;
-	struct node * left;
-	struct node * right;
+	FileDescriptor filedesc;
+	struct BSTnode * left;
+	struct BSTnode * right;
 };
 
-typedef struct node node;
+typedef struct BSTnode BSTnode;
 
 
-node * insert(node * root, char filepath[]);
-void inorder(node *root);
-node * getNode();
-void delete(node *root, char file[]);
-void search(node *root, char filepath[]);
-node * min(node *);
+BSTnode * insertBST(BSTnode * , FileDescriptor * );
+void displayBST(BSTnode *);
+BSTnode * getBSTNode();
+//void delete(node *root, char []);
+FileDescriptor * searchBST(BSTnode * , char []);
+BSTnode * min(BSTnode *);
