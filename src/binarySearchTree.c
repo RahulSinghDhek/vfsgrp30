@@ -1,69 +1,13 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
 
-#define path_size 50
+#include"binarySearchTree.h"
 
-struct node
-{
-	char filepath[path_size];
-	struct node * left;
-	struct node * right;
-};
-
-typedef struct node node;
-
-
-node * insert(node * root, char filepath[]);
-void inorder(node *root);
-node * getNode();
-void delete(node *root, char file[]);
-void search(node *root, char filepath[]);
-node * min(node *);
-
-main()
-{
-	char filepath[path_size],filepathToBeSearched[path_size],filepathToBeDeleted[path_size] ;
-	int choice;
-	node * root=NULL;
-	while(1)
-	{
-		printf("\n 1: INSERT");
-		printf("\n 2: DELETE");
-		printf("\n 3: DISPLAY(SORTED)");
-		printf("\n 4: SEARCH");
-		printf("\n 5: QUIT \n");
-		printf("Enter your choice:  \n");
-		scanf(" %d",&choice);		
-		switch(choice)
-		{
-			case 1: printf("Enter the file path \n");
-				scanf(" %s",&filepath);
-				root = insert(root,filepath);
-				break;
-			case 2: printf("Enter the file path to be deleted\n");
-				scanf(" %s", &filepathToBeDeleted);
-				delete(root,filepathToBeDeleted);
-				break;
-			case 3: inorder(root);
-				break;
-			case 4: printf("Enter the file path to b searched\n");
-				scanf(" %s", &filepathToBeSearched);
-				search(root, filepathToBeSearched);
-				break;
-			case 5: exit(0);
-			default : printf("Please enter right choice:  ");
-		}
-	}
-
-}
-
-node * insert(node * root, char filepaths[])
+BSTnode * insertBST(BSTnode * root, FileDescriptor *fdesc)//, int * flag)
 {
 	int f=1;
-	node * ref=NULL;
-	node *temp=root;
-	node * newNode=getNode();
+	BSTnode * ref=NULL;
+	BSTnode *temp=root;
+	BSTnode * newNode=getBSTNode();
+	
 	if(newNode==NULL)
 	{
 		printf("INSUFFICIENT");
@@ -72,14 +16,18 @@ node * insert(node * root, char filepaths[])
 	if(root==NULL)
 	{
 		root=newNode;
-		strcpy(root->filepath,filepaths);
+		strcpy((root->filedesc).fullPath,fdesc->fullPath);
+		strcpy((root->filedesc).fileName,fdesc->fileName);
+		strcpy((root->filedesc).fileType,fdesc->fileType);
+		root->filedesc.fileSize=fdesc->fileSize;
+		root->filedesc.locationBlockNo=fdesc->locationBlockNo;
 	}
 	else
 	{
 		
 		while(temp)
 		{
-			if(strcmp(filepaths,temp->filepath)>=0)
+			if(strcmp(fdesc->fullPath,(temp->filedesc).fullPath)>=0)
 			{
 				ref=temp;
 				temp=temp->right;
@@ -95,40 +43,49 @@ node * insert(node * root, char filepaths[])
 		if(f==1)
 		{
 			ref->right=newNode;
-			strcpy((ref->right)->filepath,filepaths);
+			strcpy(((ref->right)->filedesc).fullPath,fdesc->fullPath);
+			strcpy((ref->right)->filedesc.fileName,fdesc->fileName);
+			strcpy((ref->right)->filedesc.fileType,fdesc->fileType);
+			(ref->right)->filedesc.fileSize=fdesc->fileSize;
+			(ref->right)->filedesc.locationBlockNo=fdesc->locationBlockNo;
+			
 		}
 		else
 		{
 			ref->left=newNode;
-			strcpy((ref->left)->filepath,filepaths);	
+			strcpy(((ref->left)->filedesc).fullPath,fdesc->fullPath);
+			strcpy((ref->left)->filedesc.fileName,fdesc->fileName);
+			strcpy((ref->left)->filedesc.fileType,fdesc->fileType);
+			(ref->left)->filedesc.fileSize=fdesc->fileSize;
+			(ref->left)->filedesc.locationBlockNo=fdesc->locationBlockNo;
 		}
 	}
 	return root;
 }
 
 
-node * getNode()
+BSTnode * getBSTNode()
 {
-	node * temp;
-	temp= (node *)malloc(sizeof(node));
+	BSTnode * temp;
+	temp= (BSTnode *)malloc(sizeof(BSTnode));
 	(*temp).left=NULL;
 	(*temp).right=NULL;
 	return (temp);
 }
 
 
-void inorder(node * root)
+void displayBST(BSTnode * root)
 {
 	if(root)
 	{
-		inorder(root->left);
-		printf("%s\n",root->filepath);
-		inorder(root->right);
+		displayBST(root->left);
+		printf("%s\n",(root->filedesc).fullPath);
+		displayBST(root->right);
 	}
 }
 
 
-node * min(node * temp)
+BSTnode * min(BSTnode * temp)
 {
 	while(temp->left)
 		temp=temp->left;
@@ -136,14 +93,14 @@ node * min(node * temp)
 }
 
 
-void delete(node *root, char filepath[])
+/*void delete(node *root,fileDescriptor fdesc)
 {
 	if(root==NULL)
 	{
 		printf("EMPTY!!");
 		return;
 	}
-	if(root->left==NULL && root->right==NULL && (strcmp(filepath, root->filepath)==0))	
+	if(root->left==NULL && root->right==NULL && (strcmp(fdesc->fullPath, root->filedesc->fullPath)==0))	
 	{
 		free(root);
 		printf("\nSUCCESSFULLY DELETED");
@@ -154,13 +111,13 @@ void delete(node *root, char filepath[])
 	int f=1;
 	while(temp)
 	{
-		if(strcmp(filepath, temp->filepath)>0)
+		if(strcmp(fdesc->fullPath, temp->filedesc->fullPath)>0)
 		{
 			ref = temp;
 			temp=temp->right;
 			f=1;
 		}
-		else if(strcmp(filepath, temp->filepath)<0)
+		else if(strcmp(fdesc->fullPath, temp->filedesc->fullPath)<0)
 		{		
 			ref=temp;			
 			temp=temp->left;
@@ -169,10 +126,10 @@ void delete(node *root, char filepath[])
 		else if(temp->left && temp->right)
 		{
 			minNode=min(temp->right);
-			strcpy(temp->filepath,minNode->filepath);
+			strcpy(temp->filedesc->fullPath,minNode->filedesc->fullPath);
 			while(minNode->right)
 			{
-				strcpy(minNode->filepath,minNode->right->filepath);
+				strcpy(minNode->filedesc->fullPath,minNode->right->filedesc->fullPath);
 				minNode=minNode->right;
 			}
 						
@@ -215,9 +172,14 @@ void delete(node *root, char filepath[])
 
 
 
-void search(node *root, char filepaths[])
+
+*/
+
+
+FileDescriptor * searchBST(BSTnode *root , char path[])
 {
-	node * temp;
+	
+	BSTnode * temp;
 	temp=root;
 	if(root==NULL)
 	{
@@ -228,12 +190,12 @@ void search(node *root, char filepaths[])
 	{
 		while(temp)
 		{
-			if(strcmp(filepaths,temp->filepath)==0)
+			if(strcmp(path,(temp->filedesc).fullPath)==0)
 			{
 				printf("\nFile successfully found");
-				return;
+				return &(temp->filedesc);
 			}
-			else if(strcmp(filepaths,temp->filepath)>=0)
+			else if(strcmp(path,(temp->filedesc).fullPath)>=0)
 			{
 				temp=temp->right;
 			}
@@ -244,6 +206,7 @@ void search(node *root, char filepaths[])
 		}
 	}
 	printf("\nSorry the following path does not exist:");
+	return NULL;
 
 }
 
