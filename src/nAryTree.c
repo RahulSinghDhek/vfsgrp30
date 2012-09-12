@@ -85,7 +85,7 @@ void saveToFile(struct dirNode *root,FILE *fstore)
 {
 	if(root!=NULL)
 	{
-		fwrite(&(root->fileDesc),sizeof(fileDescriptor),1,fstore);
+		fwrite(&(root->fileDesc),sizeof(FileDescriptor),1,fstore);
 		saveToFile(root->rightSibling,fstore);
 		saveToFile(root->firstChild,fstore);
 	}
@@ -135,4 +135,4 @@ void saveToFile(struct dirNode *root,FILE *fstore)
 }*/
 
 
-
+*/
