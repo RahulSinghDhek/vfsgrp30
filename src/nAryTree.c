@@ -70,7 +70,7 @@ struct dirNode* insertNAry(FileDescriptor *fd,struct dirNode* root)
       return root;
 }
 
-void displayNAry(struct dirNode *root)
+/*void displayNAry(struct dirNode *root)
 {
 	if(root!=NULL)
 	{
@@ -79,7 +79,7 @@ void displayNAry(struct dirNode *root)
 		displayNAry(root->firstChild);
 	}
 			
-}
+}*/
 
 void saveToFile(struct dirNode *root,FILE *fstore)
 {
@@ -92,7 +92,7 @@ void saveToFile(struct dirNode *root,FILE *fstore)
 	
 }
 
-int main()
+/*int main()
 {
 	int i;
 	char ch;
@@ -132,7 +132,7 @@ int main()
 	fclose(fp);
 	
 	return 0;
-}
+}*/
 
 
 
