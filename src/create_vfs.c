@@ -1,5 +1,5 @@
-#include "vfs.h"
-#include "commands.h"
+#include "../include/vfs.h"
+#include "../include/commands.h"
 #include<stdio.h>
 #include<string.h>
 void create_vfs(char label[],long systemSize)
