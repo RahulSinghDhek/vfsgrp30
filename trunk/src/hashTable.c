@@ -1,14 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<string.h>										//In struct, name is of fixed size,
-												//1D hashing
+#include<string.h>
+#include "../include/hashTable.h"
+											//1D hashing
 struct hash_link *insertnode(struct hash_link *start, char str_val[], char str_path[])
 {	
 	struct hash_link *temp,*ptr;
 	int i;
 	int size;
 	
-	size=sizeof(str_val);
+	size=strlen(str_val);
 	ptr = malloc(sizeof(struct hash_link));
 	for(i=0; i< size; i++)
 		ptr->name[i]=str_val[i];
@@ -36,24 +37,24 @@ void serchStartPoint(char name_File[])
 	else if(index == -1)
 		printf("Invalid file name\n");
 	else
-		char Result[] = searchFile(array[index],name_File);
+		searchFile(array[index],name_File);
 }
 
 void searchFile(struct hash_link *start, char name_File[])
 {	int count = 0;	
 	while(start->next!=NULL)
 	{	if (strcmp(start->name,name_File)==0)
-		{	printf("Loc: %s\n",start->fullpath);
+		{	printf("Loc: %s\n",start->fullPath);
 			count++;
 		}
 		start = start->next;
 	}
-	if(count == 0)
-		printf("%d Files Found. Search Ended...\n",count);
+	printf("%d Files Found. Search Ended...\n",count);
 }
 
 int fun_Hash(char FirstAlpha)
-{	int hashFunc, asciival = tolower(FirstAlpha);
+{	int hashFunc =-1;
+	int asciival = tolower(FirstAlpha);
 	if(asciival >=97 && asciival <=122)
 		hashFunc = asciival - 97 + 1;
 	else if(asciival == 32)
@@ -64,7 +65,10 @@ int fun_Hash(char FirstAlpha)
 }
 
 void display_Hash()
-{	for(i=0; i<27; i++)
+{	int i;
+	struct hash_link *temp;
+
+	for(i=0; i<27; i++)
 	{	if(array[i]==NULL)
 			printf("Hash Table Empty...\n");
 		else
@@ -83,7 +87,7 @@ void display_Hash()
 	}
 }
 
-int main()
+/*int main()
 {	
 	char nameFile[], pathFile[];
 	int index = 0;
@@ -124,11 +128,11 @@ int main()
 			}
 	//}
 		}
-	*/
+
 	return 1;
 }
 	
-
+*/
 
 
 
