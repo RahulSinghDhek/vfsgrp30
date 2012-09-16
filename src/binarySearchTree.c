@@ -1,7 +1,7 @@
 
 #include"binarySearchTree.h"
 
-BSTnode * insertBST(BSTnode * root, FileDescriptor *fdesc)//, int * flag)
+BSTnode * insertBST(BSTnode * root, FileDescriptor *fdesc, int * flag)
 {
 	int f=1;
 	BSTnode * ref=NULL;
@@ -27,18 +27,24 @@ BSTnode * insertBST(BSTnode * root, FileDescriptor *fdesc)//, int * flag)
 		
 		while(temp)
 		{
-			if(strcmp(fdesc->fullPath,(temp->filedesc).fullPath)>=0)
+			if(strcmp(fdesc->fullPath,(temp->filedesc).fullPath)>0)
 			{
 				ref=temp;
 				temp=temp->right;
 				f=1;
 			}
-			else
+			else if(strcmp(fdesc->fullPath,(temp->filedesc).fullPath)<0)
 			{
 				ref=temp;
 				temp=temp->left;
 				f=0;
 			}
+			else
+			{
+				*flag=1;
+				return root;
+			}
+				
 		}
 		if(f==1)
 		{
