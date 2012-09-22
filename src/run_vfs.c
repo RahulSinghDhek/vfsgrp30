@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<string.h>
-#include "vfs.h"
+#include "../include/vfs.h"
 //#include "commands.h"
 void main()
 {
