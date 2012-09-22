@@ -2,7 +2,7 @@
 #include<stdio.h>
 
 struct dirNode {
-  FileDescriptor fileDesc;
+  FileDescriptor *fileDesc;
   struct dirNode *firstChild;
   struct dirNode *rightSibling;
 };
