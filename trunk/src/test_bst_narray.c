@@ -18,8 +18,8 @@ int main()
 	FileDescriptor *fd1;
 	FileDescriptor *filedes;
 	int flag= 0;
-	fstore=fopen("nary_store.dat","wb");
 	fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
+	rootBST=NULL;
 	if((fp=fopen("inputfiledesc.txt","r"))==NULL)
 		printf("Cannot open file");
 	else
@@ -30,28 +30,13 @@ int main()
 			fscanf(fp,"%s",fd->fileType);
 			fscanf(fp,"%ld",&fd->fileSize);
 			fscanf(fp,"%d",&fd->locationBlockNo);
-			root=insertNAry(fd,root);
-			
-		}
-	}
-	fclose(fp);
-	//displayNAry(root);
-	saveToFile(root,fstore);
-	fclose(fstore);	
-	root=NULL;
-	rootBST=NULL;
-	if((fp2=fopen("nary_store.dat","rb"))==NULL)
-		printf("Cannot open file");
-	else
-	{
-		while(fread(fd,sizeof(FileDescriptor),1,fp2))
-		{			
 			rootBST=insertBST(rootBST,fd,&flag);
 			if(flag)
 				printf("\n DUPLCATE FILEPATHS NOT ALLOWED");
 			
 		}
 	}
+	fclose(fp);
 	flag= 0;
 	tempBST= rootBST;
 	displayBST(tempBST);

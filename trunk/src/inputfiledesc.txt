@@ -3,15 +3,25 @@ abc
 rar
 100
 6
-xyz
-/home/F
-doc
+def
+/home/abc
+zip
 200
-3
-aaa
-/home/C
-txt
-300
-4
+1
+etc
+/home/etc
+folder
+100
+2
+xyz
+/home/etc/xyz
+folder
+100
+2
+zzz
+/home/abc/zzz
+folder
+100
+2
 
 
