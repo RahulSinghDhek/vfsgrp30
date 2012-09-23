@@ -1,26 +1,61 @@
 #include<stdio.h>
-#include "commands.h"
+#include<string.h>
+#include<stdlib.h>
+//#include "commands.h"
+#include "vfs.h"
 #define TEMP_SIZE 10
-void unmount_vfs(char vfs_label[])
+void unmount_vfs(char label[])
 {
-	printf("%s unmounted\n",vfs_label);
-	/*char temp[TEMP_SIZE];	
+	printf("%s unmounted\n",label);
+	char temp[TEMP_SIZE];	
 	strcpy(temp,label);
 	strcat(temp,".dat");	//add path
 	int i;
-	FILE *fp;
+	FILE *fp,*fp1;
+	MetaHeader metaHeader;
 
-	if((fp=fopen(lb,"wb"))==NULL)
+	if((fp=fopen("inputfiledesc.txt","r"))==NULL)
+		printf("Cannot open file");
+	
+	else
+	{
+		i=0;
+		FileDescriptor *fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
+		while(fscanf(fp,"%s",fd->fileName)!=EOF && *flag==100)
+		{
+			fscanf(fp,"%s",fd->fullPath);
+			fscanf(fp,"%s",fd->fileType);
+			fscanf(fp,"%ld",&fd->fileSize);
+			fscanf(fp,"%d",&fd->locationBlockNo);
+			strcpy(metaHeader.filedescArray[i].fileName,fd->fileName);
+			strcpy(metaHeader.filedescArray[i].fullPath,fd->fullPath);
+			strcpy(metaHeader.filedescArray[i].fileType,fd->fileType);
+			metaHeader.filedescArray[i].fileSize=fd->fileSize;
+			metaHeader.filedescArray[i].locationBlockNo=fd->locationBlockNo;
+			printf("%d\n",*(flag));
+			i++;
+			fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
+		}
+	}
+	fclose(fp);
+	metaHeader.noOfFileDescriptors=i;
+	if((fp=fopen(temp,"wb"))==NULL)
+	{	
 		printf("Cannot create file");
+		*flag=CANNOT_CREATE_FILE;
+	}
 	else
 	{
 		fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
-		fseek(fp,sizeof(MetaHeader),SEEK_SET);
-		saveToFile(root,fp);
-		fseek(fp,sizeof(FileDescriptor)*(metaHeader->noOfFileDescriptors),SEEK_SET);
-		fwrite(&FreeList,sizeof(FreeList),1,fp);
-		fseek(fp,sizeof(FreeList),SEEK_SET);
-		fwrite(&block,sizeof(Block),MAX_NO_FILE_DESCRIPTORS,fp
-	}*/
+		for(i=0;i<(vfs_size/sizeof(Block));i++)
+		{
+			Block block;
+			fwrite(&block,sizeof(Block),1,fp);
+		}
+		if(i*sizeof(Block)<vfs_size){
+			Block block;
+			fwrite(&block,sizeof(Block),1,fp);
+		}
+	}
 }
 
