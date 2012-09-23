@@ -2,8 +2,8 @@
 #include<string.h>
 #include<stdlib.h>
 #include"header.h"
-#define error 1
-#define ok 0
+//#define error 1
+//#define ok 0
 
 int main()
 {
@@ -16,7 +16,8 @@ int main()
 	BSTnode *tempBST = NULL;
 	FileDescriptor *fd;
 	FileDescriptor *fd1;
-	int flag=ok;
+	FileDescriptor *filedes;
+	int flag= 0;
 	fstore=fopen("nary_store.dat","wb");
 	fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
 	if((fp=fopen("inputfiledesc.txt","r"))==NULL)
@@ -51,15 +52,20 @@ int main()
 			
 		}
 	}
-	
+	flag= 0;
 	tempBST= rootBST;
 	displayBST(tempBST);
 	
-	printf("\n enter the path to b serched");
+	printf("\n enter the path to be Serched:\n");
 	scanf("%s", pathToBeSearched);
-	fd1 = searchBST(rootBST,pathToBeSearched);
-	if(fd1!=NULL)
-	printf("\nFILE_NAME:%s\n FULL_PATH:%s\n FILE_TYPE:%s\n FILE_SIZE:%ld bytes\n BLOCK_NO:%d",fd1->fileName,fd1->fullPath,fd1->fileType,fd1->fileSize,fd1->locationBlockNo );
+	searchBST(rootBST,pathToBeSearched, &flag);
+	if(flag)
+		printf("\n Sorry the Path Could not be Found");
+	else
+	{
+		//printf("\nFILE_NAME:%s\n FULL_PATH:%s\n FILE_TYPE:%s\n FILE_SIZE:%ld bytes\n BLOCK_NO:%d",filedes->fileName,filedes->fullPath,filedes->fileType,filedes->fileSize,filedes->locationBlockNo );
+	}
+		
 	fclose(fp);
 	
 	return 0;

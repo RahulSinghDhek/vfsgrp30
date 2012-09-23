@@ -16,24 +16,24 @@ BSTnode * insertBST(BSTnode * root, FileDescriptor *fdesc, int * flag)
 	if(root==NULL)
 	{
 		root=newNode;
-		strcpy((root->filedesc).fullPath,fdesc->fullPath);
-		strcpy((root->filedesc).fileName,fdesc->fileName);
-		strcpy((root->filedesc).fileType,fdesc->fileType);
-		root->filedesc.fileSize=fdesc->fileSize;
-		root->filedesc.locationBlockNo=fdesc->locationBlockNo;
+		strcpy((root->filedesc)->fullPath,fdesc->fullPath);
+		strcpy((root->filedesc)->fileName,fdesc->fileName);
+		strcpy((root->filedesc)->fileType,fdesc->fileType);
+		root->filedesc->fileSize=fdesc->fileSize;
+		root->filedesc->locationBlockNo=fdesc->locationBlockNo;
 	}
 	else
 	{
 		
 		while(temp)
 		{
-			if(strcmp(fdesc->fullPath,(temp->filedesc).fullPath)>0)
+			if(strcmp(fdesc->fullPath,((temp->filedesc)->fullPath))>0)
 			{
 				ref=temp;
 				temp=temp->right;
 				f=1;
 			}
-			else if(strcmp(fdesc->fullPath,(temp->filedesc).fullPath)<0)
+			else if(strcmp(fdesc->fullPath,temp->filedesc->fullPath)<0)
 			{
 				ref=temp;
 				temp=temp->left;
@@ -49,21 +49,21 @@ BSTnode * insertBST(BSTnode * root, FileDescriptor *fdesc, int * flag)
 		if(f==1)
 		{
 			ref->right=newNode;
-			strcpy(((ref->right)->filedesc).fullPath,fdesc->fullPath);
-			strcpy((ref->right)->filedesc.fileName,fdesc->fileName);
-			strcpy((ref->right)->filedesc.fileType,fdesc->fileType);
-			(ref->right)->filedesc.fileSize=fdesc->fileSize;
-			(ref->right)->filedesc.locationBlockNo=fdesc->locationBlockNo;
+			strcpy((ref->right)->filedesc->fullPath,fdesc->fullPath);
+			strcpy((ref->right)->filedesc->fileName,fdesc->fileName);
+			strcpy((ref->right)->filedesc->fileType,fdesc->fileType);
+			(ref->right)->filedesc->fileSize=fdesc->fileSize;
+			(ref->right)->filedesc->locationBlockNo=fdesc->locationBlockNo;
 			
 		}
 		else
 		{
 			ref->left=newNode;
-			strcpy(((ref->left)->filedesc).fullPath,fdesc->fullPath);
-			strcpy((ref->left)->filedesc.fileName,fdesc->fileName);
-			strcpy((ref->left)->filedesc.fileType,fdesc->fileType);
-			(ref->left)->filedesc.fileSize=fdesc->fileSize;
-			(ref->left)->filedesc.locationBlockNo=fdesc->locationBlockNo;
+			strcpy(((ref->left)->filedesc)->fullPath,fdesc->fullPath);
+			strcpy((ref->left)->filedesc->fileName,fdesc->fileName);
+			strcpy((ref->left)->filedesc->fileType,fdesc->fileType);
+			(ref->left)->filedesc->fileSize=fdesc->fileSize;
+			(ref->left)->filedesc->locationBlockNo=fdesc->locationBlockNo;
 		}
 	}
 	return root;
@@ -80,13 +80,13 @@ BSTnode * getBSTNode()
 }
 
 
-void displayBST(BSTnode * root)
+void displayBST(BSTnode * temp)
 {
-	if(root)
+	if(temp)
 	{
-		displayBST(root->left);
-		printf("%s\n",(root->filedesc).fullPath);
-		displayBST(root->right);
+		displayBST(temp->left);
+		printf("%s\n",(temp->filedesc)->fullPath);
+		displayBST(temp->right);
 	}
 }
 
@@ -182,7 +182,7 @@ BSTnode * min(BSTnode * temp)
 */
 
 
-FileDescriptor * searchBST(BSTnode *root , char path[])
+void searchBST(BSTnode *root , char path[] ,int *fla)
 {
 	
 	BSTnode * temp;
@@ -196,12 +196,13 @@ FileDescriptor * searchBST(BSTnode *root , char path[])
 	{
 		while(temp)
 		{
-			if(strcmp(path,(temp->filedesc).fullPath)==0)
+			//printf("%s\t %s\n",strcat(path,".."),strcat(temp->filedesc->fullPath,".."));
+			if(strcmp(path,(temp->filedesc->fullPath))==0)
 			{
 				printf("\nFile successfully found");
-				return &(temp->filedesc);
+				return;
 			}
-			else if(strcmp(path,(temp->filedesc).fullPath)>=0)
+			else if(strcmp(path,temp->filedesc->fullPath)>0)
 			{
 				temp=temp->right;
 			}
@@ -211,8 +212,8 @@ FileDescriptor * searchBST(BSTnode *root , char path[])
 			}
 		}
 	}
-	printf("\nSorry the following path does not exist:");
-	return NULL;
+	//*fla=1;
+	printf("\nFile not found");
 
 }
 
