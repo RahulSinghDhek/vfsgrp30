@@ -1,7 +1,8 @@
-#include "../include/vfs.h"
-#include "../include/commands.h"
+#include "vfs.h"
+//#include "commands.h"
 #include<stdio.h>
 #include<string.h>
+#include<stdlib.h>
 void create_vfs(char label[],long systemSize)
 {
 	
@@ -11,20 +12,31 @@ void create_vfs(char label[],long systemSize)
 	int i;
 	FILE *fp;
 	MetaHeader metaHeader;
+	flag=(int*)malloc(sizeof(int));
+	*flag=100;
 	
 	vfs_size=systemSize;
 	if((fp=fopen(lb,"wb"))==NULL)
+	{	
 		printf("Cannot create file");
+		*flag=CANNOT_CREATE_FILE;
+	}
 	else
 	{
-		for(i=0;i<=(systemSize/sizeof(Block));i++)
+		fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
+		for(i=0;i<(systemSize/sizeof(Block));i++)
 		{
 			Block block;
 			fwrite(&block,sizeof(Block),1,fp);
-			fseek(fp,sizeof(Block)*i,SEEK_SET);
+		}
+		if(i*sizeof(Block)<systemSize){
+			Block block;
+			fwrite(&block,sizeof(Block),1,fp);
 		}
 	}
 	
-	fseek(fp,0,SEEK_SET);
-	fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
 }
+/*int main()
+{
+	create_vfs("zzz",1024);
+}*/
