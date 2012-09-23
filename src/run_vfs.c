@@ -1,7 +1,8 @@
 #include<stdio.h>
 #include<string.h>
-#include "../include/vfs.h"
-//#include "commands.h"
+#include<stdlib.h>
+#include "vfs.h"
+#include "commands.h"
 void main()
 {
         while(1)
@@ -47,7 +48,7 @@ void main()
 			}
 			arg1[k]='\0';
 			k++;
-			while(cmd2[k]!=NULL)
+			while(cmd2[k]!='\0')
                         {
 				arg2[l]=cmd2[k];	
 					k++;
