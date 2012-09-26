@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include "vfs.h"
 #include "commands.h"
 void main()
 {
@@ -15,8 +16,10 @@ void main()
 		int i=0,j=0;
 		char command[50];
 		char cmd1[15],cmd2[50];
+		printf("hello");	
         	printf("$");
-               scanf("%s",command);
+                scanf("%s",command);
+		printf("%s",command);
                
                	while(command[i]!='(')
 		{
@@ -108,10 +111,7 @@ void main()
 		{
 		printf("enter correct command\n");
 		}
-
 	}
-
-           
 }     
 
 
