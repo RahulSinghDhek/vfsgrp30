@@ -1,5 +1,5 @@
 #include "vfs.h"
-//#include "commands.h"
+#include "commands.h"
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -34,7 +34,6 @@ void create_vfs(char label[],long systemSize)
 			fwrite(&block,sizeof(Block),1,fp);
 		}
 	}
-	
 }
 /*int main()
 {
