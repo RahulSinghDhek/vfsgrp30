@@ -3,10 +3,12 @@
 #include<string.h>
 #include "../include/hashTable.h"
 											//1D hashing
-struct hash_link *insertnode(struct hash_link *start, char str_val[], char str_path[])
+NODE *insertnode(NODE *start, FileDescriptor *fd)
 {	
-	struct hash_link *temp,*ptr;
-	int i;
+	NODE *temp,*ptr;
+
+	ptr = create(fd);
+	/*int i;
 	int size;
 	
 	size=strlen(str_val);
@@ -16,7 +18,7 @@ struct hash_link *insertnode(struct hash_link *start, char str_val[], char str_p
 	ptr->next =NULL;
 	strcpy(ptr->fullPath,str_path);
 		//Store the file name and Fullpath in the node... and insert it in the write location..
-
+	*/
 	if(start==NULL)
 		start=ptr;
 	else
@@ -30,21 +32,21 @@ struct hash_link *insertnode(struct hash_link *start, char str_val[], char str_p
 	return start;
 }
 
-void serchStartPoint(char name_File[])
+void searchFile(char name_File[])
 {	int index = fun_Hash(name_File[0]);
 	if(array[index] == NULL)
 		printf("0 Files Found. Search Ended...\n");	
 	else if(index == -1)
 		printf("Invalid file name\n");
 	else
-		searchFile(array[index],name_File);
+		searchFile_internal(array[index],name_File);
 }
 
-void searchFile(struct hash_link *start, char name_File[])
+void searchFile_internal(NODE *start, char name_File[])
 {	int count = 0;	
-	while(start->next!=NULL)
-	{	if (strcmp(start->name,name_File)==0)
-		{	printf("Loc: %s\n",start->fullPath);
+	while(start!=NULL)
+	{	if (strcmp((FileDescriptor *)(temp->data)->fileName,name_File)==0)
+		{	printf("Loc: %s\n",(FileDescriptor *)(temp->data)->filePath);
 			count++;
 		}
 		start = start->next;
@@ -66,7 +68,7 @@ int fun_Hash(char FirstAlpha)
 
 void display_Hash()
 {	int i;
-	struct hash_link *temp;
+	NODE *temp;
 
 	for(i=0; i<27; i++)
 	{	if(array[i]==NULL)
@@ -75,7 +77,7 @@ void display_Hash()
 		{	temp=array[i];
 			while(temp!=NULL)
 			{
-				printf("%s",temp->name);
+				printf("%s",(FileDescriptor *)(temp->data)->fileName);
 				if(temp->next!=NULL)
 				{
 					printf("-->");
