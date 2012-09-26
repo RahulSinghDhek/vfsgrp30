@@ -13,7 +13,7 @@ void mount_vfs(char label[])
 	printf("%s mounted\n",label);
 	strcpy(lb,label);
 	strcat(lb,".dat");
-	if((fp=fopen(lb,"rb"))==NULL)
+	if((fp=fopen(lb,"rb"))==NULL)		//Open binary file in read mode
 	{	
 		printf("Cannot mount");
 		*flag=CANNOT_CREATE_FILE;
@@ -29,12 +29,13 @@ void mount_vfs(char label[])
 			fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
 			strcpy(fd->fileName,metaHeader.filedescArray[i].fileName);
 			strcpy(fd->fullPath,metaHeader.filedescArray[i].fullPath);
-			strcpy(fd->fileType,metaHeader.filedescArray[i].fileType);
+			strcpy(fd->fileType,metaHeader.filedescArray[i].fileType);	//Access fileDescriptors
 			fd->fileSize=metaHeader.filedescArray[i].fileSize;
 			fd->locationBlockNo=metaHeader.filedescArray[i].locationBlockNo;
 			
-			naryRoot=insertNAry(fd,naryRoot,flag);
+			naryRoot=insertNAry(fd,naryRoot,flag);		//insert into n-Ary Tree
 		}
 	}
 	displayNAry(naryRoot);	
+	
 }
