@@ -1,7 +1,8 @@
-#include "nAryTree.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include "vfs.h"
+#include "nAryTree.h"
 #define TRUE 1
 #define FALSE 0
 #define MAX_NAME 10
@@ -213,7 +214,7 @@ void saveToFile(struct dirNode *root,FILE *fstore)
 		}
 	}
 	fclose(fp);
-	//displayNAry(root);
+	displayNAry(root);
 	saveToFile(root,fstore);
 	fclose(fstore);	
 	/*root=NULL;
