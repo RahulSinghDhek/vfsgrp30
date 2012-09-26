@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-//#include "commands.h"
 #include "vfs.h"
+#include "commands.h"
 #define TEMP_SIZE 10
 void unmount_vfs(char label[])
 {
