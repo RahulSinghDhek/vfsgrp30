@@ -15,11 +15,9 @@ void main()
 		char exitStatus[]="exit";
 		int i=0,j=0;
 		char command[50];
-		char cmd1[15],cmd2[50];
-		printf("hello");	
+		char cmd1[15],cmd2[50];	
         	printf("$");
                 scanf("%s",command);
-		printf("%s",command);
                
                	while(command[i]!='(')
 		{
