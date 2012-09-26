@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-//#include "commands.h"
-//#include "vfs.h"
+#include "commands.h"
+#include "vfs.h"
 #include "nAryTree.h"
 void mount_vfs(char label[])
 {
@@ -35,5 +35,6 @@ void mount_vfs(char label[])
 			
 			naryRoot=insertNAry(fd,naryRoot,flag);
 		}
-	}	
+	}
+	displayNAry(naryRoot);	
 }
