@@ -7,7 +7,10 @@ void main()
 {
         while(1)
 		{
-		char arg1[MAX_FILE_SYSTEM_LABLE_SIZE];int k=0;char arg2[10];int l=0;
+		char arg1[MAX_FILE_SYSTEM_LABLE_SIZE];
+		int k=0;
+		char arg2[10];
+		int l=0;
 		long filesize;
 		char create[]="create_vfs";
 		char mount[]="mount_vfs";
@@ -18,15 +21,22 @@ void main()
 		char cmd1[15],cmd2[50];	
         	printf("$");
                 scanf("%s",command);
-               
+		if(strncmp(exitStatus,command,4)==0)
+		{
+				printf("Exited from vfs system\n");
+				exit(1);
+		}
+		else
+		{	
                	while(command[i]!='(')
 		{
                 cmd1[i]=command[i];
                 i++;
 
 		}
-               		
+               	
                 cmd1[i]='\0';
+		
                  i++;
                 
 		while(command[i]!=')')
@@ -93,22 +103,18 @@ void main()
 				k++;
 			}
 			arg1[k]='\0';
-                       unmount_vfs(arg1);
+                        unmount_vfs(arg1);
 			
 			//printf("vfs %s unmounted\n",arg1);
 
 			
 		}
 		
-     		else if(strncmp(exitStatus,cmd1,4)==0)
-			{
-				printf("Exited from vfs system\n");
-				exit(1);
-			}
 		else
 		{
 		printf("enter correct command\n");
 		}
+	    }
 	}
 }     
 
