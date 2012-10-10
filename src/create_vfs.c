@@ -12,8 +12,8 @@ void create_vfs(char label[],long systemSize)
 	int i;
 	FILE *fp;
 	MetaHeader metaHeader;
-	flag=(int*)malloc(sizeof(int));
-	*flag=100;
+	flag=(int*)malloc(sizeof(int)); 
+	*flag=ERROR_FREE;
 	
 	vfs_size=systemSize;
 	if((fp=fopen(lb,"wb"))==NULL)
@@ -26,10 +26,6 @@ void create_vfs(char label[],long systemSize)
 		fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
 		for(i=0;i<(systemSize/sizeof(Block));i++)
 		{
-			Block block;
-			fwrite(&block,sizeof(Block),1,fp);
-		}
-		if(i*sizeof(Block)<systemSize){
 			Block block;
 			fwrite(&block,sizeof(Block),1,fp);
 		}
