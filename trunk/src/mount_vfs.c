@@ -4,10 +4,14 @@
 #include "commands.h"
 #include "vfs.h"
 #include "nAryTree.h"
+#include "binarySearchTree.h"
+
 void mount_vfs(char label[])
 {
 	FILE *fp;
 	MetaHeader metaHeader;
+	int index=0;
+	BSTnode *rootBST;
 	int no_of_files,i;
 	char lb[MAX_FILE_SYSTEM_LABLE_SIZE];	
 	printf("%s mounted\n",label);
@@ -21,6 +25,7 @@ void mount_vfs(char label[])
 	else
 	{
 		naryRoot=NULL;
+		rootBST=NULL;
 		fread(&metaHeader,sizeof(MetaHeader),1,fp);
 		no_of_files=metaHeader.noOfFileDescriptors;
 		for(i=0;i<no_of_files;i++)
@@ -34,6 +39,13 @@ void mount_vfs(char label[])
 			fd->locationBlockNo=metaHeader.filedescArray[i].locationBlockNo;
 			
 			naryRoot=insertNAry(fd,naryRoot,flag);		//insert into n-Ary Tree
+
+			//rootBST=insertBST(rootBST,fd,&flag);		//insert into BST
+
+			//index = fun_Hash(fd->filename);
+			//array[index] = insertnode(array[index], &fd);
+
+			
 		}
 	}
 	displayNAry(naryRoot);	
