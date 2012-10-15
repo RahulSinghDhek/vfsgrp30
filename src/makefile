@@ -1,4 +1,4 @@
-OBJECTS = nAryTree.o create_vfs.o mount_vfs.o unmount_vfs.o run_vfs.o 
+OBJECTS = nAryTree.o create_vfs.o mount_vfs.o unmount_vfs.o run_vfs.o binarySearchTree.o
 #binarySearchTree.o
 
 #create final executable
@@ -10,8 +10,8 @@ nAryTree.o: ../include/vfs.h ../include/nAryTree.h nAryTree.c
 	gcc  -c nAryTree.c -I "../include"
 
 #create BST object
-#binarySearchTree.o: ../include/binarySearchTree.h  binarySearchTree.c
-#	gcc -c binarySearchTree.c "../include"
+binarySearchTree.o: ../include/vfs.h ../include/binarySearchTree.h binarySearchTree.c
+	gcc -c binarySearchTree.c -I "../include"
 
 #here create HashTable objects
 
