@@ -1,4 +1,4 @@
-OBJECTS = nAryTree.o create_vfs.o mount_vfs.o unmount_vfs.o run_vfs.o binarySearchTree.o
+OBJECTS = nAryTree.o create_vfs.o mount_vfs.o unmount_vfs.o run_vfs.o binarySearchTree.o list.o hashTable.o
 #binarySearchTree.o
 
 #create final executable
@@ -13,13 +13,18 @@ nAryTree.o: ../include/vfs.h ../include/nAryTree.h nAryTree.c
 binarySearchTree.o: ../include/vfs.h ../include/binarySearchTree.h binarySearchTree.c
 	gcc -c binarySearchTree.c -I "../include"
 
-#here create HashTable objects
+#create hash table objects
+list.o: ../include/list.h list.c
+	gcc -c list.c -I "../include"
+
+hastTable.o: ../include/vfs.h ../include/list.h ../include/hashTable.h  hashTable.c
+	gcc -c hashTable.c -I "../include"
 
 #create objects for commands
 create_vfs.o: ../include/vfs.h ../include/commands.h create_vfs.c
 	gcc -c create_vfs.c -I "../include"
 
-mount_vfs.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h mount_vfs.c
+mount_vfs.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h mount_vfs.c
 	gcc -c mount_vfs.c -I "../include"
 
 unmount_vfs.o: ../include/vfs.h ../include/commands.h unmount_vfs.c
