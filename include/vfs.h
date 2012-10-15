@@ -3,7 +3,8 @@
 #define MAX_FULL_PATH_SIZE 100
 #define MAX_FILE_TYPE_SIZE 10
 #define MAX_BLOCK_SIZE 1024
-#define MAX_NO_FILE_DESCRIPTORS 1024
+#define MAX_NO_OF_FILE_DESCRIPTORS 1024
+#define ERROR_FREE 100
 #define PATH_NOT_FOUND 101
 #define FILE_NOT_FOUND 102
 #define CANNOT_CREATE_FILE 103
@@ -13,7 +14,16 @@
 
 long vfs_size;
 
-int FreeList[MAX_NO_FILE_DESCRIPTORS];
+int *flag;
+struct dirNode *naryRoot;
+//BSTnode *rootBST;
+
+/*typedef struct inMemory{
+	struct dirNode *naryRoot;
+	BSTnode *rootBST;
+	NODE *array[HASH_TAB];
+	int *flag;		
+}InMemoryStruct;*/
 
 typedef struct fileDes{
 	char fileName[MAX_FILE_NAME_SIZE];
@@ -30,8 +40,9 @@ typedef struct block{
 
 typedef struct mainHeader{
 	char fileSystemLabel[MAX_FILE_SYSTEM_LABLE_SIZE];
-	int maxNoOfFileDescriptors;
 	int noOfFileDescriptors;
+	int FreeList[MAX_NO_OF_FILE_DESCRIPTORS];
+	FileDescriptor filedescArray[MAX_NO_OF_FILE_DESCRIPTORS];
 }MetaHeader;
 
 
