@@ -1,7 +1,6 @@
 # define PATH_SIZE 50
 #include<stdio.h>
 #include<stdlib.h>
-#include "vfs.h"
 #include<string.h>
 struct BSTnode
 {
@@ -13,9 +12,9 @@ struct BSTnode
 typedef struct BSTnode BSTnode;
 
 
-BSTnode * insertBST(BSTnode * , FileDescriptor * , int *);
+struct BSTnode * insertBST(struct BSTnode * , FileDescriptor * , int *);
 void displayBST(BSTnode *);
 BSTnode * getBSTNode();
 //void delete(node *root, char []);
-void searchBST(BSTnode * , char [], int *);
+//void searchBST(BSTnode * , char []);
 BSTnode * min(BSTnode *);
