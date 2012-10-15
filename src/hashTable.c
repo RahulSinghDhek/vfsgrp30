@@ -1,7 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "../include/hashTable.h"
+#include "vfs.h"
+#include "hashTable.h"
+#include "list.h"
+
 											//1D hashing
 NODE *insertnode(NODE *start, FileDescriptor *fd)
 {	
