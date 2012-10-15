@@ -34,12 +34,12 @@ NODE *insertnode(NODE *start, FileDescriptor *fd)
 
 void searchFile(char name_File[])
 {	int index = fun_Hash(name_File[0]);
-	if(array[index] == NULL)
+	if(array[index] == NULL)				//Global object shd be used to access the array item
 		printf("0 Files Found. Search Ended...\n");	
 	else if(index == -1)
 		printf("Invalid file name\n");
 	else
-		searchFile_internal(array[index],name_File);
+		searchFile_internal(array[index],name_File);	//Global object shd be used to access the array item
 }
 
 void searchFile_internal(NODE *start, char name_File[])
@@ -66,7 +66,7 @@ int fun_Hash(char FirstAlpha)
 	return hashFunc;
 }
 
-void display_Hash()
+void display_Hash()						//Global object shd be used to access the array item
 {	int i;
 	NODE *temp;
 
