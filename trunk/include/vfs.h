@@ -16,7 +16,7 @@ long vfs_size;
 
 int *flag;
 struct dirNode *naryRoot;
-//BSTnode *rootBST;
+struct BSTnode *rootBST;
 
 /*typedef struct inMemory{
 	struct dirNode *naryRoot;
