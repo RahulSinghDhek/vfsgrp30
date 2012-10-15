@@ -11,10 +11,11 @@
 };
 */
 
-NODE *array[HASH_TAB]={};
+//NODE *array[HASH_TAB]={};
 
 struct HashTable{
-	NODE *hashNodes				
+	NODE *hashNodes[HASH_TAB];
+}			
 
 NODE *insertnode(NODE*, FileDescriptor*);
 
