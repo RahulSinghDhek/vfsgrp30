@@ -40,7 +40,7 @@ void mount_vfs(char label[])
 			
 			naryRoot=insertNAry(fd,naryRoot,flag);		//insert into n-Ary Tree
 
-			//rootBST=insertBST(rootBST,fd,&flag);		//insert into BST
+			rootBST=insertBST(rootBST,fd,flag);		//insert into BST
 
 			//index = fun_Hash(fd->filename);
 			//array[index] = insertnode(array[index], &fd);
@@ -48,6 +48,9 @@ void mount_vfs(char label[])
 			
 		}
 	}
-	displayNAry(naryRoot);	
+	printf("\n naryTree display  :  ");	
+	displayNAry(naryRoot);
+	printf("\n BSTree display  :  ");
+	displayBST(rootBST);
 	
 }
