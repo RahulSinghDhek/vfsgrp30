@@ -1,33 +1,30 @@
-
+#include "vfs.h"
 #include"binarySearchTree.h"
 
-BSTnode * insertBST(BSTnode * root, FileDescriptor *fdesc, int * flag)
+struct BSTnode * insertBST(struct BSTnode * root, FileDescriptor *fdesc, int * flag)
 {
 	int f=1;
-	BSTnode * ref=NULL;
-	BSTnode *temp=root;
-	BSTnode * newNode=getBSTNode();
+	struct BSTnode * ref=NULL;
+	struct BSTnode *temp=root;
+	struct BSTnode * newNode=getBSTNode();
 	
 	if(newNode==NULL)
 	{
 		printf("INSUFFICIENT");
 		exit(0);
 	}
+	newNode->filedesc= fdesc;
 	if(root==NULL)
 	{
 		root=newNode;
-		strcpy((root->filedesc)->fullPath,fdesc->fullPath);
-		strcpy((root->filedesc)->fileName,fdesc->fileName);
-		strcpy((root->filedesc)->fileType,fdesc->fileType);
-		root->filedesc->fileSize=fdesc->fileSize;
-		root->filedesc->locationBlockNo=fdesc->locationBlockNo;
+		
 	}
 	else
 	{
 		
 		while(temp)
 		{
-			if(strcmp(fdesc->fullPath,((temp->filedesc)->fullPath))>0)
+			if(strcmp(fdesc->fullPath,temp->filedesc->fullPath)>0)
 			{
 				ref=temp;
 				temp=temp->right;
@@ -41,7 +38,7 @@ BSTnode * insertBST(BSTnode * root, FileDescriptor *fdesc, int * flag)
 			}
 			else
 			{
-				*flag=1;
+				*flag=110;
 				return root;
 			}
 				
@@ -49,43 +46,33 @@ BSTnode * insertBST(BSTnode * root, FileDescriptor *fdesc, int * flag)
 		if(f==1)
 		{
 			ref->right=newNode;
-			strcpy((ref->right)->filedesc->fullPath,fdesc->fullPath);
-			strcpy((ref->right)->filedesc->fileName,fdesc->fileName);
-			strcpy((ref->right)->filedesc->fileType,fdesc->fileType);
-			(ref->right)->filedesc->fileSize=fdesc->fileSize;
-			(ref->right)->filedesc->locationBlockNo=fdesc->locationBlockNo;
-			
 		}
 		else
 		{
 			ref->left=newNode;
-			strcpy(((ref->left)->filedesc)->fullPath,fdesc->fullPath);
-			strcpy((ref->left)->filedesc->fileName,fdesc->fileName);
-			strcpy((ref->left)->filedesc->fileType,fdesc->fileType);
-			(ref->left)->filedesc->fileSize=fdesc->fileSize;
-			(ref->left)->filedesc->locationBlockNo=fdesc->locationBlockNo;
+			
 		}
 	}
 	return root;
 }
 
 
-BSTnode * getBSTNode()
+struct BSTnode * getBSTNode()
 {
-	BSTnode * temp;
-	temp= (BSTnode *)malloc(sizeof(BSTnode));
+	struct BSTnode * temp;
+	temp= (struct BSTnode *)malloc(sizeof(struct BSTnode));
 	(*temp).left=NULL;
 	(*temp).right=NULL;
 	return (temp);
 }
 
 
-void displayBST(BSTnode * temp)
+void displayBST(struct BSTnode * temp)
 {
 	if(temp)
 	{
 		displayBST(temp->left);
-		printf("%s\n",(temp->filedesc)->fullPath);
+		printf("%s\n",temp->filedesc->fullPath);
 		displayBST(temp->right);
 	}
 }
@@ -182,11 +169,10 @@ BSTnode * min(BSTnode * temp)
 */
 
 
-void searchBST(BSTnode *root , char path[] ,int *fla)
+/*FileDescriptor * searchBST(BSTnode *root , char path[] )
 {
 	
-	BSTnode * temp;
-	temp=root;
+	
 	if(root==NULL)
 	{
 		printf("BST is empty");
@@ -194,27 +180,27 @@ void searchBST(BSTnode *root , char path[] ,int *fla)
 	}
 	else
 	{
-		while(temp)
+		while(root)
 		{
-			//printf("%s\t %s\n",strcat(path,".."),strcat(temp->filedesc->fullPath,".."));
-			if(strcmp(path,(temp->filedesc->fullPath))==0)
+			
+			if(strcmp(path,(root->filedesc->fullPath))==0)
 			{
 				printf("\nFile successfully found");
 				return;
 			}
-			else if(strcmp(path,temp->filedesc->fullPath)>0)
+			else if(strcmp(path,root->filedesc->fullPath)>0)
 			{
-				temp=temp->right;
+				root=root->right;
 			}
 			else
 			{
-				temp=temp->left;
+				root=root->left;
 			}
 		}
 	}
-	//*fla=1;
-	printf("\nFile not found");
+	//*fla=ERROR;
+	return;
 
 }
 
-
+*/
