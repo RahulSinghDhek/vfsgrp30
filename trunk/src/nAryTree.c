@@ -18,7 +18,7 @@ struct dirNode* getNode()
 
 char* parsePath(char *path)
 {
-	int l,i,j=0,dec=1,k;
+	int l,i,j=0,dec=1,k=0;
 	char *temp;
 	char *pat;
 	pat=(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));
@@ -90,8 +90,12 @@ struct dirNode* isValidPath(FileDescriptor *fd,struct dirNode* root,int *flag)
 			{
 				if(parent->firstChild==NULL)
 				{
-					if(strncmp(path_part,parent->fileDesc->fullPath,strlen(path_part)-1)!=0)
-						*flag=PATH_NOT_FOUND;
+					if(strncmp(path_part,parent->fileDesc->fullPath,strlen(path_part)-1)!=0){
+					//	*flag=PATH_NOT_FOUND;
+					FileDescriptor *tempfd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
+					strncpy(tempfd->fullPath,path_part,strlen(path_part)-1);
+					insertNAry(tempfd,root,flag);	
+					}
 					exitStatus=TRUE;
 				}	
 				else
@@ -216,7 +220,7 @@ void saveToFile(struct dirNode *root,FILE *fstore)
 	fclose(fp);
 	displayNAry(root);
 	saveToFile(root,fstore);
-	fclose(fstore);	
+	fclose(fstore);	*/
 	/*root=NULL;
 	if((fp2=fopen("nary_store.dat","rb"))==NULL)
 		printf("Cannot open file");
@@ -233,7 +237,7 @@ void saveToFile(struct dirNode *root,FILE *fstore)
 	displayNAry(root);
 	fclose(fp2);*/
 	
-//	return 0;
+	//return 0;
 //}
 
 
