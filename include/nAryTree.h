@@ -1,4 +1,4 @@
-#include"vfs.h"
+//#include"vfs.h"
 #include<stdio.h>
 
 struct dirNode {
@@ -8,5 +8,8 @@ struct dirNode {
 };
 
 struct dirNode* getNode();
-struct dirNode* insertNAry(FileDescriptor *,struct dirNode*);
+char* parsePath(char *);
+struct dirNode* isValidPath(FileDescriptor *,struct dirNode* ,int *);
+struct dirNode* insertNAry(FileDescriptor *,struct dirNode*,int *);
 void saveToFile(struct dirNode * , FILE *);
+void displayNAry(struct dirNode *);
