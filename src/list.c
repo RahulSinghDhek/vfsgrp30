@@ -1,10 +1,8 @@
-
-
 #include<stdlib.h>
 #include<stdio.h>
 #include<string.h>
-
-#include"list.h"
+#include "list.h"
+#include"vfs.h"
 
 NODE *create(void *data)    //creates the node
 {

@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include "list.h"
 #include "vfs.h"
 #include "commands.h"
 void main()
@@ -15,6 +16,7 @@ void main()
 		char create[]="create_vfs";
 		char mount[]="mount_vfs";
 		char unmount[]="unmount_vfs";
+		char makedir[]="makedir";
 		char exitStatus[]="exit";
 		int i=0,j=0;
 		char command[50];
@@ -70,9 +72,31 @@ void main()
 
 			//printf("\nvfs %s is created of size %ld\n",arg1,filesize);
 		}
-		
+		else if(strncmp(makedir,cmd1,10)==0 )
+                {
 			
+			while(cmd2[k]!=',')
 
+			{
+				arg1[k]=cmd2[k];
+					k++;
+			}
+			arg1[k]='\0';
+			k++;
+			while(cmd2[k]!='\0')
+                        {
+				arg2[l]=cmd2[k];	
+					k++;
+					l++;
+			}
+			arg2[l]='\0';
+			//filesize=strtol(arg2,NULL,10);
+			
+			make_dir(arg1,arg2);
+
+			printf("\ndirectory created");
+		}
+		
 		else if(strncmp(mount,cmd1,9)==0)
                 {
 			

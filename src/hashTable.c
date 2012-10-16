@@ -1,9 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "vfs.h"
-#include "hashTable.h"
 #include "list.h"
+#include "vfs.h"
+
+#include "hashTable.h"
+
 
 											//1D hashing
 NODE *insertnode(NODE *start, FileDescriptor *fd)
@@ -48,8 +50,8 @@ void searchFile(char name_File[])
 void searchFile_internal(NODE *start, char name_File[])
 {	int count = 0;	
 	while(start!=NULL)
-	{	if (strcmp((FileDescriptor *)(temp->data)->fileName,name_File)==0)
-		{	printf("Loc: %s\n",(FileDescriptor *)(temp->data)->filePath);
+	{	if (strcmp(((FileDescriptor *)(start->data))->fileName,name_File)==0)
+		{	printf("Loc: %s\n",((FileDescriptor *)(start->data))->fullPath);
 			count++;
 		}
 		start = start->next;
@@ -64,7 +66,7 @@ int fun_Hash(char FirstAlpha)
 		hashFunc = asciival - 97 + 1;
 	else if(asciival == 32)
 		hashFunc = -1;
-	else											//Validate File names need to handle spaces in file name
+	else							//Validate File names need to handle spaces in file name
 		hashFunc = 0;
 	return hashFunc;
 }
@@ -75,12 +77,12 @@ void display_Hash()						//Global object shd be used to access the array item
 
 	for(i=0; i<27; i++)
 	{	if(array[i]==NULL)
-			printf("Hash Table Empty...\n");
+			;//printf("Hash Table Empty...\n");
 		else
 		{	temp=array[i];
 			while(temp!=NULL)
 			{
-				printf("%s",(FileDescriptor *)(temp->data)->fileName);
+				printf("%s",((FileDescriptor *)(temp->data))->fileName);
 				if(temp->next!=NULL)
 				{
 					printf("-->");

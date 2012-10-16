@@ -1,3 +1,4 @@
+#include"list.h"
 #include "vfs.h"
 #include"binarySearchTree.h"
 
@@ -24,6 +25,7 @@ struct BSTnode * insertBST(struct BSTnode * root, FileDescriptor *fdesc, int * f
 		
 		while(temp)
 		{
+			printf("%s\n",fdesc->fullPath );
 			if(strcmp(fdesc->fullPath,temp->filedesc->fullPath)>0)
 			{
 				ref=temp;

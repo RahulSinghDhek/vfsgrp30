@@ -1,8 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include "list.h"
 #include "vfs.h"
 #include "nAryTree.h"
+
 #define TRUE 1
 #define FALSE 0
 #define MAX_NAME 10
@@ -139,6 +141,7 @@ struct dirNode* insertNAry(FileDescriptor *fd,struct dirNode* root,int *flag)
 			parent=root;
 			while(exitStatus==FALSE)
 			{
+					printf("%s\n",p->fileDesc->fullPath);
 				if(strstr(p->fileDesc->fullPath,parent->fileDesc->fullPath)==NULL)
 				{
 					if(parent->rightSibling==NULL)
@@ -182,7 +185,7 @@ void saveToFile(struct dirNode *root,FILE *fstore)
 {
 	if(root!=NULL)
 	{
-		fwrite(&(root->fileDesc),sizeof(FileDescriptor),1,fstore);
+		//fwrite(&(root->fileDesc),sizeof(FileDescriptor),1,fstore);
 		saveToFile(root->rightSibling,fstore);
 		saveToFile(root->firstChild,fstore);
 	}
