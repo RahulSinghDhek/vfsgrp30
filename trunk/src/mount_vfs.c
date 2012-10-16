@@ -2,12 +2,15 @@
 #include<string.h>
 #include<stdlib.h>
 #include "commands.h"
+#include "list.h"
 #include "vfs.h"
 #include "nAryTree.h"
 #include "binarySearchTree.h"
+#include "hashTable.h"
 
 void mount_vfs(char label[])
 {
+	
 	FILE *fp;
 	MetaHeader metaHeader;
 	int index=0;
@@ -26,6 +29,11 @@ void mount_vfs(char label[])
 	{
 		naryRoot=NULL;
 		rootBST=NULL;
+		for(i=0;i<HASH_TAB;i++)
+		{
+			array[i]=NULL;
+		}
+			
 		fread(&metaHeader,sizeof(MetaHeader),1,fp);
 		no_of_files=metaHeader.noOfFileDescriptors;
 		for(i=0;i<no_of_files;i++)
@@ -42,8 +50,8 @@ void mount_vfs(char label[])
 
 			rootBST=insertBST(rootBST,fd,flag);		//insert into BST
 
-			//index = fun_Hash(fd->filename);
-			//array[index] = insertnode(array[index], &fd);
+			index = fun_Hash(fd->fileName[0]);
+			array[index] = insertnode(array[index], fd);
 
 			
 		}
@@ -52,5 +60,6 @@ void mount_vfs(char label[])
 	displayNAry(naryRoot);
 	printf("\n BSTree display  :  ");
 	displayBST(rootBST);
-	
+	printf("\n HTable display  :  ");
+	display_Hash();
 }

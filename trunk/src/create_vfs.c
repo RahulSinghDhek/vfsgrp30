@@ -1,3 +1,4 @@
+#include "list.h"
 #include "vfs.h"
 #include "commands.h"
 #include<stdio.h>
@@ -23,6 +24,21 @@ void create_vfs(char label[],long systemSize)
 	}
 	else
 	{
+		FileDescriptor *fdroot;
+		fdroot=(FileDescriptor*)malloc(sizeof(FileDescriptor));
+		strcpy(fdroot->fileName,"root");
+		strcpy(fdroot->fullPath,"/");
+		strcpy(fdroot->fileType,"dir");
+		fdroot->fileSize=0;
+		fdroot->locationBlockNo=-1;
+		metaHeader.filedescArray[0]=*fdroot;
+		strcpy(metaHeader.fileSystemLabel,label);
+		metaHeader.noOfFileDescriptors=1;
+		for(i=0;i<MAX_NO_OF_FILE_DESCRIPTORS;i++)
+		{
+			metaHeader.FreeList[i]=0;
+		}
+		
 		fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
 		for(i=0;i<(systemSize/sizeof(Block));i++)
 		{

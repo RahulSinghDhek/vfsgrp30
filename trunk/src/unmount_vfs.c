@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include "list.h"
 #include "vfs.h"
 #include "commands.h"
 #define TEMP_SIZE 10
@@ -12,9 +13,9 @@ void unmount_vfs(char label[])
 	strcat(temp,".dat");	//add path
 	int i;
 	FILE *fp;
-	MetaHeader metaHeader;
+	
 
-	if((fp=fopen("inputfiledesc.txt","r"))==NULL)		//Open dummy i/p file
+	/*if((fp=fopen("inputfiledesc.txt","r"))==NULL)		//Open dummy i/p file
 		printf("Cannot open file");
 	
 	else
@@ -37,8 +38,10 @@ void unmount_vfs(char label[])
 			fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
 		}
 	}
-	fclose(fp);
-	metaHeader.noOfFileDescriptors=i;
+	fclose(fp);*/
+	
+	
+	/*metaHeader.noOfFileDescriptors=i;
 	if((fp=fopen(temp,"wb"))==NULL)		//Open binary file in write mode
 	{	
 		printf("Cannot create file");
@@ -56,6 +59,6 @@ void unmount_vfs(char label[])
 			Block block;
 			fwrite(&block,sizeof(Block),1,fp);
 		}
-	}
+	}*/
 }
 
