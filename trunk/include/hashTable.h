@@ -1,8 +1,7 @@
 //In struct, name is of fixed size,
-#define HASH_TAB 27
-//#define FILE_NAME_SIZE 100
-//#define FILE_PATH 1000
-
+//#define HASH_TAB 27
+//#include "list.h"
+//#include "vfs.h"
 
 /*struct hash_link
 {	char name[FILE_NAME_SIZE];
@@ -15,13 +14,13 @@
 
 struct HashTable{
 	NODE *hashNodes[HASH_TAB];
-}			
+};			
 
-NODE *insertnode(NODE*, FileDescriptor*);
+NODE *insertnode(NODE *, FileDescriptor *);
 
 int fun_Hash(char);
 
-void searchFile(char);
+void searchFile(char []);
 
 void searchFile_internal(NODE *, char []);
 
