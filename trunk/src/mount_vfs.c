@@ -14,7 +14,7 @@ void mount_vfs(char label[])
 	FILE *fp;
 	MetaHeader metaHeader;
 	int index=0;
-	BSTnode *rootBST;
+	//BSTnode *rootBST;
 	int no_of_files,i;
 	char lb[MAX_FILE_SYSTEM_LABLE_SIZE];	
 	//flag=(int*)malloc(sizeof(int)); 
