@@ -26,9 +26,9 @@ void make_dir(char path[],char dir[])
 	fd->fileSize=0;
 	fd->locationBlockNo=-1;
 
-	naryRoot=insertNAry(fd,naryRoot,flag);
+	naryRoot=insertNAry(fd,naryRoot,&flag);
 
-	rootBST=insertBST(rootBST,fd,flag);		//insert into BST
+	rootBST=insertBST(rootBST,fd,&flag);		//insert into BST
 	
 	index = fun_Hash(fd->fileName[0]);
 	array[index] = insertnode(array[index], fd);

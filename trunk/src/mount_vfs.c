@@ -17,13 +17,15 @@ void mount_vfs(char label[])
 	BSTnode *rootBST;
 	int no_of_files,i;
 	char lb[MAX_FILE_SYSTEM_LABLE_SIZE];	
-	printf("%s mounted\n",label);
+	//flag=(int*)malloc(sizeof(int)); 
+	flag=ERROR_FREE;
+	
 	strcpy(lb,label);
 	strcat(lb,".dat");
 	if((fp=fopen(lb,"rb"))==NULL)		//Open binary file in read mode
 	{	
 		printf("Cannot mount");
-		*flag=CANNOT_CREATE_FILE;
+		flag=CANNOT_CREATE_FILE;
 	}
 	else
 	{
@@ -32,10 +34,10 @@ void mount_vfs(char label[])
 		for(i=0;i<HASH_TAB;i++)
 		{
 			array[i]=NULL;
-		}
-			
+		}	
 		fread(&metaHeader,sizeof(MetaHeader),1,fp);
 		no_of_files=metaHeader.noOfFileDescriptors;
+		
 		for(i=0;i<no_of_files;i++)
 		{
 			FileDescriptor *fd;
@@ -46,9 +48,9 @@ void mount_vfs(char label[])
 			fd->fileSize=metaHeader.filedescArray[i].fileSize;
 			fd->locationBlockNo=metaHeader.filedescArray[i].locationBlockNo;
 			
-			naryRoot=insertNAry(fd,naryRoot,flag);		//insert into n-Ary Tree
+			naryRoot=insertNAry(fd,naryRoot,&flag);		//insert into n-Ary Tree
 
-			rootBST=insertBST(rootBST,fd,flag);		//insert into BST
+			rootBST=insertBST(rootBST,fd,&flag);		//insert into BST
 
 			index = fun_Hash(fd->fileName[0]);
 			array[index] = insertnode(array[index], fd);
@@ -62,4 +64,5 @@ void mount_vfs(char label[])
 	displayBST(rootBST);
 	printf("\n HTable display  :  ");
 	display_Hash();
+	printf("%s mounted\n",label);
 }
