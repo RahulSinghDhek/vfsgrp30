@@ -70,7 +70,7 @@ void main()
 			
 			create_vfs(arg1,filesize);
 
-			//printf("\nvfs %s is created of size %ld\n",arg1,filesize);
+			printf("\nvfs %s is created of size %ld\n",arg1,filesize);
 		}
 		else if(strncmp(makedir,cmd1,10)==0 )
                 {
@@ -94,7 +94,7 @@ void main()
 			
 			make_dir(arg1,arg2);
 
-			printf("\ndirectory created");
+			printf("\ndirectory created\n\n");
 		}
 		
 		else if(strncmp(mount,cmd1,9)==0)
