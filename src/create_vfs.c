@@ -13,14 +13,13 @@ void create_vfs(char label[],long systemSize)
 	int i;
 	FILE *fp;
 	MetaHeader metaHeader;
-	flag=(int*)malloc(sizeof(int)); 
-	*flag=ERROR_FREE;
+	
 	
 	vfs_size=systemSize;
 	if((fp=fopen(lb,"wb"))==NULL)
 	{	
 		printf("Cannot create file");
-		*flag=CANNOT_CREATE_FILE;
+		//*flag=CANNOT_CREATE_FILE;
 	}
 	else
 	{
