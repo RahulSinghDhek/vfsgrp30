@@ -7,58 +7,29 @@
 #define TEMP_SIZE 10
 void unmount_vfs(char label[])
 {
-	printf("%s unmounted\n",label);
+	//printf("%s unmounted\n",label);
 	char temp[TEMP_SIZE];	
+	FileDescriptor filedescArray[MAX_NO_OF_FILE_DESCRIPTORS];
 	strcpy(temp,label);
 	strcat(temp,".dat");	//add path
-	int i;
+	int i,count=0;
+	MetaHeader metaHeader;
 	FILE *fp;
-	
-
-	/*if((fp=fopen("inputfiledesc.txt","r"))==NULL)		//Open dummy i/p file
-		printf("Cannot open file");
-	
-	else
-	{
-		i=0;
-		FileDescriptor *fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
-		while(fscanf(fp,"%s",fd->fileName)!=EOF && *flag==100)
-		{
-			fscanf(fp,"%s",fd->fullPath);
-			fscanf(fp,"%s",fd->fileType);
-			fscanf(fp,"%ld",&fd->fileSize);
-			fscanf(fp,"%d",&fd->locationBlockNo);
-			strcpy(metaHeader.filedescArray[i].fileName,fd->fileName);
-			strcpy(metaHeader.filedescArray[i].fullPath,fd->fullPath);
-			strcpy(metaHeader.filedescArray[i].fileType,fd->fileType);
-			metaHeader.filedescArray[i].fileSize=fd->fileSize;
-			metaHeader.filedescArray[i].locationBlockNo=fd->locationBlockNo;
-			printf("%d\n",*(flag));
-			i++;
-			fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
-		}
-	}
-	fclose(fp);*/
-	
-	
-	/*metaHeader.noOfFileDescriptors=i;
-	if((fp=fopen(temp,"wb"))==NULL)		//Open binary file in write mode
+	if((fp=fopen(temp,"rb+"))==NULL)		//Open binary file in write mode
 	{	
 		printf("Cannot create file");
-		*flag=CANNOT_CREATE_FILE;
+		flag=CANNOT_CREATE_FILE;
 	}
 	else
 	{
+		saveToArray(naryRoot,filedescArray,&count);
+		strcpy(metaHeader.fileSystemLabel,label);
+		metaHeader.noOfFileDescriptors=count;
+		for(i=0;i<count;i++){
+				metaHeader.filedescArray[i]=filedescArray[i];
+		}		
 		fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
-		for(i=0;i<(vfs_size/sizeof(Block));i++)
-		{
-			Block block;
-			fwrite(&block,sizeof(Block),1,fp);
-		}
-		if(i*sizeof(Block)<vfs_size){
-			Block block;
-			fwrite(&block,sizeof(Block),1,fp);
-		}
-	}*/
+		
+	}
 }
-
+	
