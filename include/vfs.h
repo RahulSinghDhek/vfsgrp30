@@ -13,27 +13,10 @@
 #define NOT_ENOUGH_MEMORY 106
 #define HASH_TAB 27
 
-/*-----------
-typedef struct node  {
-	void *data;
-	struct node *next;	
-} NODE;
-
-
-NODE *create(void *data);
-NODE *insert_after(NODE *node, void *data);
-NODE *insert_beginning(NODE *start, void *data);
-void delete(NODE *start, NODE *node);
-void printnode(NODE *p, void (*f)(void *));
-void printstr(void *str);
-void printint(void *n);
-void printchar(void *c);
-
-*/
 
 long vfs_size;
 
-int *flag;
+int flag;
 //int index;
 struct dirNode *naryRoot;
 struct BSTnode *rootBST;
@@ -67,5 +50,5 @@ typedef struct mainHeader{
 	FileDescriptor filedescArray[MAX_NO_OF_FILE_DESCRIPTORS];
 }MetaHeader;
 
-MetaHeader mhd;
+//MetaHeader mhd;
 
