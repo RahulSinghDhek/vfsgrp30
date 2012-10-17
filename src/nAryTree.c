@@ -81,8 +81,12 @@ struct dirNode* isValidPath(FileDescriptor *fd,struct dirNode* root,int *flag)
 			{
 				if(parent->rightSibling==NULL)
 				{
-					if(strncmp(path_part,parent->fileDesc->fullPath,strlen(path_part)-1)!=0)
-						*flag=PATH_NOT_FOUND;
+					if(strncmp(path_part,parent->fileDesc->fullPath,strlen(path_part)-1)!=0){
+						// *flag=PATH_NOT_FOUND;
+						FileDescriptor *tempfd1=(FileDescriptor*)malloc(sizeof(FileDescriptor));
+						strncpy(tempfd1->fullPath,path_part,strlen(path_part)-1);
+						insertNAry(tempfd1,root,flag);
+					}
 						exitStatus=TRUE;
 				}
 				else
@@ -190,6 +194,17 @@ void saveToFile(struct dirNode *root,FILE *fstore)
 		saveToFile(root->firstChild,fstore);
 	}
 	
+}
+
+void saveToArray(struct dirNode *root,FileDescriptor filedescArray[],int *count)
+{
+	//static int fd_count=0;
+	if(root!=NULL)
+	{
+		filedescArray[(*count)++]=*(root->fileDesc);
+		saveToArray(root->rightSibling,filedescArray,count);
+		saveToArray(root->firstChild,filedescArray,count);
+	}	
 }
 /*int main()
 {
