@@ -48,12 +48,12 @@ int main( int argc, char *argv[] )
 	char command[CMDSIZE], par1[PARSIZE], par2[PARSIZE], par3[PARSIZE];
 	char *token;
 
-	if( argc != 2 ){
+	/*if( argc != 2 ){
 		fprintf(stderr,"Usage: vfsdriver <scriptfile>\n");
 		return(1);
-	}
+	}*/
 
-	if( (scriptfp=fopen(argv[1],"r")) == NULL ){
+	if( (scriptfp=fopen("../test/new.txt","r")) == NULL ){
 		fprintf(stderr,"Unable to open script file: %s\n", argv[1]);
 		return(2);
 	}
@@ -173,7 +173,9 @@ void listdir ( char *P1, int P2, char *P3 )
 void addfile ( char *P1, char *P2, char *P3 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("addfile_TO_BE_DONE\n");
+	printf("in driver:%s",P1);
+	addFile(P1,P2,P3);
+	printf("addfile_DONE\n");
 }
 
 void listfile ( char *P1, char *P2 )
