@@ -11,17 +11,14 @@ void make_dir(char path[],char dir[])
 {
 	FileDescriptor *fd;
 	int index=0;
-	printf("%s",path);
-	printf("%s",dir);
+	
 	if(strcmp(path,"/")!=0)
 		strcat(path,"/");
-	printf("\n%s",path);
-	printf("%s",dir);
+	
 	fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
 	strcpy(fd->fileName,dir);
 	strcpy(fd->fullPath,strcat(path,dir));
-	printf("\n%s",fd->fullPath);
-	//printf("%s",dir);
+	
 	strcpy(fd->fileType,"dir");
 	fd->fileSize=0;
 	fd->locationBlockNo=-1;
