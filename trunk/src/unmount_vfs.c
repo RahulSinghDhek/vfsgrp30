@@ -13,7 +13,7 @@ void unmount_vfs(char label[])
 	strcpy(temp,label);
 	strcat(temp,".dat");	//add path
 	int i,count=0;
-	MetaHeader metaHeader;
+	//MetaHeader metaHeader;
 	FILE *fp;
 	if((fp=fopen(temp,"rb+"))==NULL)		//Open binary file in write mode
 	{	
@@ -23,12 +23,12 @@ void unmount_vfs(char label[])
 	else
 	{
 		saveToArray(naryRoot,filedescArray,&count);
-		strcpy(metaHeader.fileSystemLabel,label);
-		metaHeader.noOfFileDescriptors=count;
+		//strcpy(mhd.fileSystemLabel,label);
+		mhd.noOfFileDescriptors=count;
 		for(i=0;i<count;i++){
-				metaHeader.filedescArray[i]=filedescArray[i];
+				mhd.filedescArray[i]=filedescArray[i];
 		}		
-		fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
+		fwrite(&mhd,sizeof(MetaHeader),1,fp);
 		
 	}
 }
