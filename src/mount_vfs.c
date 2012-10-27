@@ -12,7 +12,7 @@ void mount_vfs(char label[])
 {
 	
 	FILE *fp;
-	MetaHeader metaHeader;
+	//MetaHeader metaHeader;
 	int index=0;
 	//BSTnode *rootBST;
 	int no_of_files,i;
@@ -35,18 +35,18 @@ void mount_vfs(char label[])
 		{
 			array[i]=NULL;
 		}	
-		fread(&metaHeader,sizeof(MetaHeader),1,fp);
-		no_of_files=metaHeader.noOfFileDescriptors;
+		fread(&mhd,sizeof(MetaHeader),1,fp);
+		no_of_files=mhd.noOfFileDescriptors;
 		
 		for(i=0;i<no_of_files;i++)
 		{
 			FileDescriptor *fd;
 			fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
-			strcpy(fd->fileName,metaHeader.filedescArray[i].fileName);
-			strcpy(fd->fullPath,metaHeader.filedescArray[i].fullPath);
-			strcpy(fd->fileType,metaHeader.filedescArray[i].fileType);	//Access fileDescriptors
-			fd->fileSize=metaHeader.filedescArray[i].fileSize;
-			fd->locationBlockNo=metaHeader.filedescArray[i].locationBlockNo;
+			strcpy(fd->fileName,mhd.filedescArray[i].fileName);
+			strcpy(fd->fullPath,mhd.filedescArray[i].fullPath);
+			strcpy(fd->fileType,mhd.filedescArray[i].fileType);	//Access fileDescriptors
+			fd->fileSize=mhd.filedescArray[i].fileSize;
+			fd->locationBlockNo=mhd.filedescArray[i].locationBlockNo;
 			
 			naryRoot=insertNAry(fd,naryRoot,&flag);		//insert into n-Ary Tree
 
