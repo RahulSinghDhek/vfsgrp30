@@ -1,4 +1,4 @@
-OBJECTS = nAryTree.o create_vfs.o mount_vfs.o makedir.o unmount_vfs.o run_vfs.o binarySearchTree.o list.o hashTable.o
+OBJECTS = nAryTree.o create_vfs.o mount_vfs.o makedir.o unmount_vfs.o vfsdriver.o binarySearchTree.o list.o hashTable.o list_dir.o
 #binarySearchTree.o
 
 #create final executable
@@ -30,8 +30,18 @@ mount_vfs.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../inc
 makedir.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h makedir.c
 	gcc -c makedir.c -I "../include"
 
+list_dir.o: ../include/list.h ../include/vfs.h ../include/commands.h ../include/nAryTree.h makedir.c
+	gcc -c list_dir.c -I "../include"
+
 unmount_vfs.o: ../include/vfs.h ../include/commands.h unmount_vfs.c
 	gcc -c unmount_vfs.c -I "../include"
 
-run_vfs.o: ../include/commands.h run_vfs.c
-	gcc -c run_vfs.c -I "../include"
+vfsdriver.o: ../include/commands.h vfsdriver.c
+	gcc -c vfsdriver.c -I "../include"
+
+clean:
+	rm *.o
+	rm finalout
+
+#run_vfs.o: ../include/commands.h run_vfs.c
+#	gcc -c run_vfs.c -I "../include"
