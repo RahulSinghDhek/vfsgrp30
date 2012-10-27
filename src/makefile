@@ -1,4 +1,4 @@
-OBJECTS = nAryTree.o create_vfs.o mount_vfs.o makedir.o unmount_vfs.o vfsdriver.o binarySearchTree.o list.o hashTable.o list_dir.o
+OBJECTS = nAryTree.o create_vfs.o mount_vfs.o makedir.o unmount_vfs.o vfsdriver.o binarySearchTree.o list.o hashTable.o addFile.o list_dir.o
 #binarySearchTree.o
 
 #create final executable
@@ -32,6 +32,9 @@ makedir.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../inclu
 
 list_dir.o: ../include/list.h ../include/vfs.h ../include/commands.h ../include/nAryTree.h makedir.c
 	gcc -c list_dir.c -I "../include"
+
+addFile.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h addFile.c
+	gcc -c addFile.c -I "../include"
 
 unmount_vfs.o: ../include/vfs.h ../include/commands.h unmount_vfs.c
 	gcc -c unmount_vfs.c -I "../include"
