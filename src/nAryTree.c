@@ -62,6 +62,8 @@ struct dirNode* isValidPath(FileDescriptor *fd,struct dirNode* root,int *flag)
 	struct dirNode *parent;
 	char temp_path[MAX_FULL_PATH_SIZE];
 	char *path_part;
+	char st[MAX_FULL_PATH_SIZE],prev[MAX_FULL_PATH_SIZE];
+	char *tk;
 	path_part==(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));	
 	strcpy(temp_path,fd->fullPath);
 	//strcpy(path_part,parsePath(temp_path));
@@ -77,6 +79,7 @@ struct dirNode* isValidPath(FileDescriptor *fd,struct dirNode* root,int *flag)
 		parent=root;
 		while(exitStatus==FALSE)
 		{
+			//printf("path_part:%s",path_part);	
 			if(strstr(path_part,parent->fileDesc->fullPath)==NULL)
 			{
 				if(parent->rightSibling==NULL)
@@ -85,6 +88,18 @@ struct dirNode* isValidPath(FileDescriptor *fd,struct dirNode* root,int *flag)
 						// *flag=PATH_NOT_FOUND;
 						FileDescriptor *tempfd1=(FileDescriptor*)malloc(sizeof(FileDescriptor));
 						strncpy(tempfd1->fullPath,path_part,strlen(path_part)-1);
+						strcpy(st,path_part);
+						tk=strtok(st,"/");
+						while(tk!=NULL)
+						{
+							//printf("tk:%s\n",tk);
+							strcpy(prev,tk);
+							tk=strtok(NULL,"/");
+						}	
+						strcpy(tempfd1->fileName,prev);
+						strcpy(tempfd1->fileType,"dir");
+						tempfd1->fileSize=0;
+						tempfd1->locationBlockNo=-1;
 						insertNAry(tempfd1,root,flag);
 					}
 						exitStatus=TRUE;
@@ -100,6 +115,18 @@ struct dirNode* isValidPath(FileDescriptor *fd,struct dirNode* root,int *flag)
 					//	*flag=PATH_NOT_FOUND;
 					FileDescriptor *tempfd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
 					strncpy(tempfd->fullPath,path_part,strlen(path_part)-1);
+					strcpy(st,path_part);
+					tk=strtok(st,"/");
+					while(tk!=NULL)
+					{
+						//printf("tk:%s\n",tk);
+						strcpy(prev,tk);
+						tk=strtok(NULL,"/");
+					}	
+					strcpy(tempfd->fileName,prev);
+					strcpy(tempfd->fileType,"dir");
+					tempfd->fileSize=0;
+					tempfd->locationBlockNo=-1;
 					insertNAry(tempfd,root,flag);	
 					}
 					exitStatus=TRUE;
@@ -145,7 +172,7 @@ struct dirNode* insertNAry(FileDescriptor *fd,struct dirNode* root,int *flag)
 			parent=root;
 			while(exitStatus==FALSE)
 			{
-					printf("%s\n",p->fileDesc->fullPath);
+					//printf("%s\n",p->fileDesc->fullPath);
 				if(strstr(p->fileDesc->fullPath,parent->fileDesc->fullPath)==NULL)
 				{
 					if(parent->rightSibling==NULL)
@@ -206,6 +233,61 @@ void saveToArray(struct dirNode *root,FileDescriptor filedescArray[],int *count)
 		saveToArray(root->firstChild,filedescArray,count);
 	}	
 }
+//-------------------------------------------List directoriers---------------------------------------------------------
+
+/*void list_dir(char src_path[],int flag,char dest_path[])
+{
+	FILE *fp;
+	fp=fopen("list_dir_output.txt","w");
+	if(fp==NULL)
+		printf("Cannot open file");
+	else
+	{
+	dirNode *tempRoot=NULL;
+	tempRoot=searchNary(naryRoot,src_path);
+	if(tempRoot!=NULL&&flag==0)
+		displayNonrecursive(tempRoot->leftChild,fp);
+	else
+	if(tempRoot!=NULL&&flag==1)
+		displayRecursive(tempRoot->leftChild,fp);
+	else
+		printf("ERROR:Path not found");
+	}	
+}
+
+void displayNonRecursive(dirNode* root,FILE *fp)
+{
+	if(root!=NULL)
+	{
+		fprintf(fp,"%s",root->fileDesc->fileName);
+		displayNonRecursive(root->rightSibling);
+	}
+}
+
+void displayRecursive(dirNode* root,FILE *fp)
+{
+	if(root!=NULL)
+	{
+		fprintf(fp,"%s",root->fileDesc->fileName);
+		displayNonRecursive(root->rightSibling);
+		displayNonRecursive(root->leftChild);
+	}
+}
+
+dirNode* searchNary(dirNode* root,char src_path[])
+{
+	if(root!=NULL){
+		if(strcmp(root->fileDesc->fullPath,src_path)==0&&(strcmp(root->fileDesc->fileType,"dir")==0))
+			return root;
+		searchNary(root->rightSibling);
+		searchNary(root->leftSibling);
+	}	
+}
+*/
+
+
+//void list_dir(
+
 /*int main()
 {
 	int i;
