@@ -141,6 +141,57 @@ struct dirNode* isValidPath(FileDescriptor *fd,struct dirNode* root,int *flag)
      return root;		
 }
 
+struct dirNode* checkValidPath(FileDescriptor *fd,struct dirNode* root,int *flag)
+{
+	int l,exitStatus;
+	struct dirNode *parent;
+	char temp_path[MAX_FULL_PATH_SIZE];
+	char *path_part;
+	path_part==(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));
+	strcpy(temp_path,fd->fullPath);
+	path_part=parsePath(temp_path);
+	if(root==NULL)
+	{
+		if(strcmp(path_part,"/")!=0) //for root path
+			*flag=101; //wrong path trying to insert at root
+	}
+	else
+	{
+		exitStatus=FALSE;
+		parent=root;
+		while(exitStatus==FALSE)
+		{
+			if(strstr(path_part,parent->fileDesc->fullPath)==NULL)
+			{
+				if(parent->rightSibling==NULL)
+				{
+					if(strncmp(path_part,parent->fileDesc->fullPath,strlen(path_part)-1)!=0){
+						*flag=PATH_NOT_FOUND;
+					}
+					exitStatus=TRUE;
+				}
+				else
+					parent=parent->rightSibling;
+			}
+			else
+			{
+				if(parent->firstChild==NULL)
+				{
+					if(strncmp(path_part,parent->fileDesc->fullPath,strlen(path_part)-1)!=0){
+						*flag=PATH_NOT_FOUND;
+					}
+					exitStatus=TRUE;
+				}
+				else
+				{
+					parent=parent->firstChild;
+				}
+			}
+		}
+     }
+   return root;
+}
+
 struct dirNode* insertNAry(FileDescriptor *fd,struct dirNode* root,int *flag)
 {
 	struct dirNode *p;
