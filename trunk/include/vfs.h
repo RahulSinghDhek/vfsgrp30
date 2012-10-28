@@ -50,5 +50,5 @@ typedef struct mainHeader{
 	FileDescriptor filedescArray[MAX_NO_OF_FILE_DESCRIPTORS];
 }MetaHeader;
 
-//MetaHeader mhd;
+MetaHeader mhd;
 
