@@ -1,4 +1,4 @@
-OBJECTS = nAryTree.o create_vfs.o mount_vfs.o makedir.o unmount_vfs.o vfsdriver.o binarySearchTree.o list.o hashTable.o addFile.o list_dir.o
+OBJECTS = nAryTree.o create_vfs.o mount_vfs.o makedir.o unmount_vfs.o vfsdriver.o binarySearchTree.o list.o hashTable.o addFile.o list_dir.o deletedir.o
 #binarySearchTree.o
 
 #create final executable
@@ -24,8 +24,14 @@ hashTable.o: ../include/vfs.h ../include/hashTable.h  hashTable.c
 create_vfs.o: ../include/vfs.h ../include/commands.h create_vfs.c
 	gcc -c create_vfs.c -I "../include"
 
+deletedir.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h deletedir.c
+	gcc -c deletedir.c -I "../include"
+
 mount_vfs.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h mount_vfs.c
 	gcc -c mount_vfs.c -I "../include"
+
+#movedir.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h movedir.c
+#	gcc -c movedir.c -I "../include"
 
 makedir.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h makedir.c
 	gcc -c makedir.c -I "../include"
