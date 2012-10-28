@@ -53,7 +53,7 @@ int main( int argc, char *argv[] )
 		return(1);
 	}*/
 
-	if( (scriptfp=fopen("../test/new.txt","r")) == NULL ){
+	if( (scriptfp=fopen("../test/scriptfile.txt","r")) == NULL ){
 		fprintf(stderr,"Unable to open script file: %s\n", argv[1]);
 		return(2);
 	}
@@ -153,13 +153,15 @@ void makedir ( char *P1, char *P2 )
 void deletedir ( char *P1 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("deletedir_TO_BE_DONE\n");
+	delete_dir(P1);
+	printf("deletedir_DONE\n");
 }
 
 void movedir ( char *P1, char *P2 )
-{
+{	//char *temp;
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("movedir_TO_BE_DONE\n");
+	//temp = move_dir(P1,P2);	
+	printf("movedir_DONE\n");
 }
 
 void listdir ( char *P1, int P2, char *P3 )
