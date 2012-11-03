@@ -1,0 +1,11 @@
+createvfs demo1 1024
+mountvfs demo1
+makedir / home
+makedir / xyz
+makedir / lmn
+makedir /xyz abc
+makedir /xyz/abc def
+listdir / 1 bforemove
+movedir /xyz /lmn
+listdir / 1 aftermove
+unmountvfs demo1
