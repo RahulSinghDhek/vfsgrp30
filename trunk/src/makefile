@@ -1,5 +1,4 @@
-OBJECTS = nAryTree.o create_vfs.o mount_vfs.o makedir.o unmount_vfs.o vfsdriver.o binarySearchTree.o list.o hashTable.o addFile.o list_dir.o deletedir.o
-#binarySearchTree.o
+OBJECTS = nAryTree.o create_vfs.o mount_vfs.o makedir.o unmount_vfs.o vfsdriver.o binarySearchTree.o list.o hashTable.o addFile.o list_dir.o deletedir.o copyfile.o exportfile.o updateFile.o listFile.o movedir.o movefile.o removefile.o
 
 #create final executable
 finalout:$(OBJECTS)
@@ -30,8 +29,26 @@ deletedir.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../inc
 mount_vfs.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h mount_vfs.c
 	gcc -c mount_vfs.c -I "../include"
 
-#movedir.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h movedir.c
-#	gcc -c movedir.c -I "../include"
+removefile.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h mount_vfs.c
+	gcc -c removefile.c -I "../include"
+
+movefile.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h mount_vfs.c
+	gcc -c movefile.c -I "../include"
+
+listFile.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h mount_vfs.c
+	gcc -c listFile.c -I "../include"
+
+updateFile.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h mount_vfs.c
+	gcc -c updateFile.c -I "../include"
+
+exportfile.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h exportfile.c
+	gcc -c exportfile.c -I "../include"
+
+copyfile.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h copyfile.c
+	gcc -c copyfile.c -I "../include"
+
+movedir.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h movedir.c
+	gcc -c movedir.c -I "../include"
 
 makedir.o: ../include/vfs.h ../include/commands.h ../include/nAryTree.h ../include/binarySearchTree.h ../include/hashTable.h makedir.c
 	gcc -c makedir.c -I "../include"
