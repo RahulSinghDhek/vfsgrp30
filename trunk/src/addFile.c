@@ -45,9 +45,7 @@ void addFile(char directoryPath[], char fileName[], char sourceFilePath[])
 	}
 	else
 	{
-		printf("first seek");
 		fseek(fp1,sizeof(MetaHeader),SEEK_SET);
-		printf("2nd seek");
 		for(j=0;mhd.FreeList[j]!=0;j++);
 		fseek(fp1,j*sizeof(Block),SEEK_SET);
 		fwrite(str,i*sizeof(char),1,fp1);
@@ -61,27 +59,28 @@ void addFile(char directoryPath[], char fileName[], char sourceFilePath[])
 	strcpy(fd->fileType,"file");
 	fd->fileSize=i;
 	fd->locationBlockNo=j;
+	printf("\n locationBlock no is %d \n ",j);
 	naryRoot=insertNAry(fd,naryRoot,&flag);
 	rootBST=insertBST(rootBST,fd,&flag);
 	index = fun_Hash(fd->fileName[0]);
 	array[index] = insertnode(array[index], fd);
 	fclose(fp1);
 	//-----------------------------------reading----------------------------------
-	if((fp=fopen(label,"rb"))==NULL)		//Open binary file in read mode
+	if((fp=fopen(label,"rb+"))==NULL)		//Open binary file in read mode
 	{	
 		printf("Cannot mount");
 		flag=CANNOT_CREATE_FILE;
 	}
 	else
 	{
-		printf("first seek");
+		
 		fseek(fp1,sizeof(MetaHeader),SEEK_SET);
-		printf("2nd seek");
 		for(j=0;mhd.FreeList[j]!=1;j++);
 		fseek(fp1,j*sizeof(Block),SEEK_SET);
 		fread(str,i*sizeof(char),1,fp1);
 		printf("string read:%s",str);
 		//mhd.FreeList[j]=1;
 	}
+	fclose(fp);
 }
 
