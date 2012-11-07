@@ -48,12 +48,12 @@ int main( int argc, char *argv[] )
 	char command[CMDSIZE], par1[PARSIZE], par2[PARSIZE], par3[PARSIZE];
 	char *token;
 
-	/*if( argc != 2 ){
+	if( argc != 2 ){
 		fprintf(stderr,"Usage: vfsdriver <scriptfile>\n");
 		return(1);
-	}*/
+	}
 
-	if( (scriptfp=fopen("../test/scriptfile.txt","r")) == NULL ){
+	if( (scriptfp=fopen(argv[1],"r")) == NULL ){
 		fprintf(stderr,"Unable to open script file: %s\n", argv[1]);
 		return(2);
 	}
@@ -108,8 +108,10 @@ void processcommand( char *command, char *P1, char *P2, char *P3 )
 		listfile (P1,P2);
 	else if( strcmp(command, "updatefile") == 0 )
 		updatefile (P1,P2);
-	else if( strcmp(command, "removefile") == 0 )
+	else if( strcmp(command, "removefile") == 0 ){
+		printf("in removefile");
 		removefile (P1);
+	}
 	else if( strcmp(command, "movefile") == 0 )
 		movefile (P1,P2);
 	else if( strcmp(command, "copyfile") == 0 )
@@ -158,10 +160,10 @@ void deletedir ( char *P1 )
 }
 
 void movedir ( char *P1, char *P2 )
-{	//char *temp;
+{	char *temp;
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	//temp = move_dir(P1,P2);	
-	printf("movedir_DONE\n");
+	temp = move_dir(P1,P2);	
+	printf("movedir_DONE %s\n",temp);
 }
 
 void listdir ( char *P1, int P2, char *P3 )
@@ -183,37 +185,44 @@ void addfile ( char *P1, char *P2, char *P3 )
 void listfile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("listfile_TO_BE_DONE\n");
+	listFile (P1,P2);
+	printf("listfile_DONE\n");
 }
 
 void updatefile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("updatefile_TO_BE_DONE\n");
+	updateFile(P1,P2);
+	printf("updatefile_DONE\n");
 }
 
 void removefile ( char *P1 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("removefile_TO_BE_DONE\n");
+	printf("bfore removefile");
+	removeFile(P1);
+	printf("removefile_DONE\n");
 }
 
 void movefile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
+	move_file(P1,P2);	
 	printf("movefile_TO_BE_DONE\n");
 }
 
 void copyfile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("copyfile_TO_BE_DONE\n");
+	copy_file(P1,P2);
+	printf("copyfile_DONE\n");
 }
 
 void exportfile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("exportfile_TO_BE_DONE\n");
+	export_file(P1,P2);
+	printf("exportfile_DONE at:%s\n",P2);
 }
 
 void searchfile ( char *P1, char *P2 )
