@@ -15,12 +15,10 @@ void delete_dir(char path[])
 {
 	FileDescriptor *fd;	
 	char tempPath[MAX_FULL_PATH_SIZE], dirName[MAX_FULL_PATH_SIZE], tempDir[MAX_FULL_PATH_SIZE];
-	int l,i,k,j,exitStatus,dec=1,f=0;
-	//char* parentDir;
+	int l,i,k,j,exitStatus,dec=1,f=0;	
 	char* t;
 	char* pat;
-	pat=(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));
-	//char* currentFullPath;
+	pat=(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));	
 	char tokens[MAX_DIR][MAX_FULL_PATH_SIZE];
 	struct dirNode* temp;
 	struct dirNode* temp1;
@@ -29,29 +27,21 @@ void delete_dir(char path[])
 	fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));
 	strcpy(fd->fullPath,tempPath);
 	temp = checkValidPath(fd,naryRoot,&flag);
-	//printf("\n%s\n",temp->fileDesc->fullPath);
-	//printf("\n%s\n",naryRoot->fileDesc->fullPath);
-	//printf("\n%s\n",naryRoot->firstChild->fileDesc->fullPath);
-	//char* a=temp->firstChild->firstChild->fileDesc->fullPath;
-	//strcat(a,"/");
-	//printf("\n%s\n",a);
-	//temp=temp->firstChild->firstChild;
-	//printf("\n%s\n",temp->firstChild->rightSibling->rightSibling->fileDesc->fileName);
 	l=strlen(path);
 	printf("\nl = %d\n",l);
 	t=(char*)malloc(sizeof(10));
 	
 	if(flag==101)		//invalid path
 	{
-		printf("\ndeletedir_FAILURE: DIRECTORY DOES NOT EXIST\n");
+		printf("\nCANNOT_FIND_SPECIFIED_PATH_OR_DIR\n");
 	}
 	
 	else 		//valid path
 	{
 	
-		
+		//extract directory name
 		k=0;
-		for(i=l-1;i>=0;i--)	//extract directory name
+		for(i=l-1;i>=0;i--)	
 		{		
 	
 			if(path[i]=='/')	
@@ -72,11 +62,10 @@ void delete_dir(char path[])
 			dirName[i]=tempDir[j];
 			j--;
 		}
-		printf("\ndir is %s",dirName);
-		
-		
-		
-		////////////////////////////////////////////////
+				
+				
+				
+		//Generate tokens
 		j=0;
 		for(i=1;i<l;i++)
 		{		
@@ -101,13 +90,9 @@ void delete_dir(char path[])
 		}
 		*(t+k)='\0';
 		strcpy(tokens[j],t);
-		//printf("\ntokens");
-		//for(i=0;i<j;i++)
-			//printf("\n%s",tokens[i]);
-		////////////////////////////////////////////////////////////////
-		strcat(pat,"/");		
-		//printf("\npat = %s",pat);
+		strcat(pat,"/");			
 		k=0;
+		//traverse to the parent directory		
 		while(k<j)
 		{
 			if(strcmp(pat,temp->fileDesc->fullPath)==0)
@@ -125,17 +110,18 @@ void delete_dir(char path[])
 				temp=temp->rightSibling;
 			}
 		}
-		
-		//printf("\nafter while");
-		//printf("\npat = %s",pat);
-		//printf("\ntemp = %s",temp->firstChild->fileDesc->fullPath);
+
 		
 		exitStatus=FALSE; 
-		//parentDir = parsePath(path);
-		//strcpy(temp1->fileDesc->fullPath,parentDir);
-		//printf("\nfirst child of parent directory: ",temp1->firstChild->fileDesc->fileName);
-		//printf("\nParent Directory is %s",parentDir);
-		temp1=temp->firstChild;
+		if(temp->firstChild==NULL)
+		{
+			printf("\nINVALID_DIRNAME\n");
+			exitStatus=TRUE;
+		}
+		else
+		{	
+			temp1=temp->firstChild;
+		}
 		while(exitStatus==FALSE)
 		{
 		
@@ -145,9 +131,18 @@ void delete_dir(char path[])
 			{
 				if(strcmp(temp1->fileDesc->fileType,"dir")==0)
 				{
-					temp->firstChild=temp1->rightSibling;
-					exitStatus=TRUE;
-			}
+					if(temp1->firstChild==NULL)
+					{
+						temp->firstChild=temp1->rightSibling;
+						exitStatus=TRUE;
+					}
+					
+					else
+					{
+						printf("\nDIRECTORY_IS_NOT_EMPTY\n");
+						exitStatus=TRUE;					
+					}
+				}
 
 			}
 				
@@ -156,16 +151,35 @@ void delete_dir(char path[])
 
 				while(exitStatus==FALSE)
 				{
-					temp=temp1;
-					temp1=temp1->rightSibling;
-					if(strcmp(temp1->fileDesc->fileName,dirName)==0)
+					if(temp1->rightSibling==NULL)
 					{
-						if(strcmp(temp1->fileDesc->fileType,"dir")==0)
+						printf("\nINVALID_DIRNAME\n");
+						exitStatus=TRUE;
+					}
+					
+					else
+					{
+						temp=temp1;
+						temp1=temp1->rightSibling;			
+					
+						if(strcmp(temp1->fileDesc->fileName,dirName)==0)
 						{
-							temp->rightSibling=temp1->rightSibling;
-							exitStatus=TRUE;
-						}
+							if(strcmp(temp1->fileDesc->fileType,"dir")==0)
+							{
+								if(temp1->firstChild==NULL)
+								{
+									temp->rightSibling=temp1->rightSibling;
+									exitStatus=TRUE;
+								}
+							
+								else
+								{
+									printf("\nDIRECTORY_IS_NOT_EMPTY\n");
+									exitStatus=TRUE;					
+								}
+							}
 
+						}
 					}
 				}
 			}
@@ -175,7 +189,7 @@ void delete_dir(char path[])
 		
 		printf("\n naryTree display  :  ");	
 		displayNAry(naryRoot);
-		printf("\nValid Path\n");	
+			
 	}
 
 }
