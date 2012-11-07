@@ -171,14 +171,14 @@ BSTnode * min(BSTnode * temp)
 */
 
 
-/*FileDescriptor * searchBST(BSTnode *root , char path[] )
+BSTnode * searchBST(BSTnode *root , char path[] )
 {
 	
 	
 	if(root==NULL)
 	{
 		printf("BST is empty");
-		return;
+		return NULL;
 	}
 	else
 	{
@@ -187,8 +187,8 @@ BSTnode * min(BSTnode * temp)
 			
 			if(strcmp(path,(root->filedesc->fullPath))==0)
 			{
-				printf("\nFile successfully found");
-				return;
+				//printf("\nFile successfully found");
+				return root;
 			}
 			else if(strcmp(path,root->filedesc->fullPath)>0)
 			{
@@ -201,8 +201,7 @@ BSTnode * min(BSTnode * temp)
 		}
 	}
 	//*fla=ERROR;
-	return;
+	return NULL;
 
 }
 
-*/
