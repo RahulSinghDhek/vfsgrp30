@@ -32,7 +32,8 @@ struct dirNode* searchNary(struct dirNode* root,char src_path[])
 			return root;
 		searchNary(root->rightSibling,src_path);
 		searchNary(root->firstChild,src_path);
-	}	
+	}
+	return NULL;	
 }
 
 void listdirs(char src_path[],int flag,char dest_path[])
