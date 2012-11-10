@@ -29,8 +29,7 @@ NODE *array[HASH_TAB];
 	NODE *array[HASH_TAB];
 	int *flag;		
 }InMemoryStruct;*/
-
-typedef struct fileDes{
+typedef struct fileDESC{
 	char fileName[MAX_FILE_NAME_SIZE];
 	char fullPath[MAX_FULL_PATH_SIZE];
 	char fileType[MAX_FILE_TYPE_SIZE];
