@@ -16,5 +16,5 @@ struct BSTnode * insertBST(struct BSTnode * , FileDescriptor * , int *);
 void displayBST(BSTnode *);
 BSTnode * getBSTNode();
 //void delete(node *root, char []);
-//void searchBST(BSTnode * , char []);
+BSTnode * searchBST(BSTnode *root , char path[] );
 BSTnode * min(BSTnode *);
