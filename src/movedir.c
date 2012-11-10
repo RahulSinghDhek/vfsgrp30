@@ -117,6 +117,7 @@ struct dirNode * rmvFrmSrcNode(char source_dir_path[])
 			prev->firstChild = curr->rightSibling;
 		else if(prev->rightSibling == curr)
 			prev->rightSibling = curr->rightSibling;
+		curr->rightSibling = NULL;
 	}
 return curr;
 }
