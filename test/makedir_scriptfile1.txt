@@ -1,0 +1,5 @@
+createvfs vfs1 1024
+mountvfs vfs1
+makedir / vehicle
+makedir  vehicle1
+mountvfs vfs1

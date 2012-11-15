@@ -1,0 +1,5 @@
+createvfs vfs3 1024
+mountvfs vfs3 
+makedir / vehicle
+makedir / vehicle
+unmountvfs vfs3

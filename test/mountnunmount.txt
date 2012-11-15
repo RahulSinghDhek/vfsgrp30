@@ -1,0 +1,3 @@
+createvfs mount_test 1024
+mountvfs mount_test
+unmountvfs mount_test
