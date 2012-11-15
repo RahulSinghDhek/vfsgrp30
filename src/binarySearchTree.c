@@ -80,39 +80,49 @@ void displayBST(struct BSTnode * temp)
 }
 
 
-BSTnode * min(BSTnode * temp)
+BSTnode * min(BSTnode * temp, int *f)
 {
-	while(temp->left)
-		temp=temp->left;
-	return temp;
+	BSTnode *t = temp;	
+	BSTnode * ref=temp;	
+	while(t->left)
+	{	
+		 *f=1;		
+		ref = temp;
+		t=t->left;
+	}
+	return ref;
 }
 
 
-/*void delete(node *root,fileDescriptor fdesc)
+void deleteBST(BSTnode *root, char filepath[])
 {
+	BSTnode * ref, *tempnode, *minNode;
+	BSTnode * temp;
+	int a=0;
+	int *flag;
+	flag=&a;
+	int f=1;
 	if(root==NULL)
 	{
 		printf("EMPTY!!");
 		return;
 	}
-	if(root->left==NULL && root->right==NULL && (strcmp(fdesc->fullPath, root->filedesc->fullPath)==0))	
+	if(root->left==NULL && root->right==NULL && (strcmp(filepath, root->filedesc->fullPath)==0))	
 	{
 		free(root);
 		printf("\nSUCCESSFULLY DELETED");
 		return;
 	}
-	node * ref, *tempnode, *minNode;
-	node *temp=root;
-	int f=1;
+	temp=root;
 	while(temp)
 	{
-		if(strcmp(fdesc->fullPath, temp->filedesc->fullPath)>0)
+		if(strcmp(filepath, root->filedesc->fullPath)>0)
 		{
 			ref = temp;
 			temp=temp->right;
 			f=1;
 		}
-		else if(strcmp(fdesc->fullPath, temp->filedesc->fullPath)<0)
+		else if(strcmp(filepath, root->filedesc->fullPath)<0)
 		{		
 			ref=temp;			
 			temp=temp->left;
@@ -120,18 +130,31 @@ BSTnode * min(BSTnode * temp)
 		}	
 		else if(temp->left && temp->right)
 		{
-			minNode=min(temp->right);
-			strcpy(temp->filedesc->fullPath,minNode->filedesc->fullPath);
-			while(minNode->right)
+			minNode=min(temp->right, flag);
+			if(*flag==0)
 			{
-				strcpy(minNode->filedesc->fullPath,minNode->right->filedesc->fullPath);
-				minNode=minNode->right;
+				strcpy(temp->filedesc->fullPath,minNode->filedesc->fullPath);
+				temp->right=minNode->right;
+				free(minNode);
 			}
-						
-			free(minNode);
-			temp=NULL;
+			else
+			{
+				strcpy(temp->filedesc->fullPath,minNode->left->filedesc->fullPath);
+				if(minNode->left->right)
+				{
+					tempnode=minNode->left	;
+					free(tempnode);			
+					minNode->left=minNode->left->right;
+				}
+				else
+				{
+					free(minNode->left);
+					minNode->left=NULL;
+				}
+				
+			}
 			printf("\nSUCCESSFULLY DELETED");
-		}
+		}	
 		else
 		{
 			if(temp->left)
@@ -155,9 +178,7 @@ BSTnode * min(BSTnode * temp)
 				else
 					ref->right=NULL;
 			}
-			tempnode=temp;
-			temp=NULL;
-			free(tempnode);
+			free(temp);
 			printf("\n File Path SUCCESSFULLY DELETED\n");
 				
 		}
@@ -165,10 +186,6 @@ BSTnode * min(BSTnode * temp)
 	}
 }
 
-
-
-
-*/
 
 
 BSTnode * searchBST(BSTnode *root , char path[] )
