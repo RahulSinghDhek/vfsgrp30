@@ -13,36 +13,58 @@ void create_vfs(char label[],long systemSize)
 	int i;
 	FILE *fp;
 	MetaHeader metaHeader;
-	
+	flag=100;		//NO_ERRORS;
 	
 	vfs_size=systemSize;
-	if((fp=fopen(lb,"wb"))==NULL)
-	{	
-		printf("Cannot create file");
-		//*flag=CANNOT_CREATE_FILE;
-	}
-	else
+
+	if(systemSize>MAX_VFS_MEMORY)
 	{
-		FileDescriptor *fdroot;
-		fdroot=(FileDescriptor*)malloc(sizeof(FileDescriptor));
-		strcpy(fdroot->fileName,"root");
-		strcpy(fdroot->fullPath,"/");
-		strcpy(fdroot->fileType,"dir");
-		fdroot->fileSize=0;
-		fdroot->locationBlockNo=-1;
-		metaHeader.filedescArray[0]=*fdroot;
-		strcpy(metaHeader.fileSystemLabel,label);
-		metaHeader.noOfFileDescriptors=1;
-		for(i=0;i<MAX_NO_OF_FILE_DESCRIPTORS;i++)
-		{
-			metaHeader.FreeList[i]=0;
+		flag=103;
+		printf(ERR_VFS_CREATE_03);		
+	}
+	else if(systemSize % MAX_BLOCK_SIZE != 0)
+	{
+		flag=105;
+		printf(ERR_VFS_CREATE_05);		
+	}
+	else if((fp=fopen(lb,"rb"))!=NULL)
+	{	
+		flag=101;
+		printf(ERR_VFS_CREATE_01);
+		fclose(fp);	
+	}
+	else{
+		//fclose(fp);	
+		if((fp=fopen(lb,"wb"))==NULL)
+		{	
+			printf("Cannot create file");
+			//*flag=CANNOT_CREATE_FILE;
+			flag=102;
+			printf(ERR_VFS_CREATE_02);	
 		}
-		
-		fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
-		for(i=0;i<(systemSize/sizeof(Block));i++)
+		else
 		{
-			Block block;
-			fwrite(&block,sizeof(Block),1,fp);
+			FileDescriptor *fdroot;
+			fdroot=(FileDescriptor*)malloc(sizeof(FileDescriptor));
+			strcpy(fdroot->fileName,"root");
+			strcpy(fdroot->fullPath,"/");
+			strcpy(fdroot->fileType,"dir");
+			fdroot->fileSize=0;
+			fdroot->locationBlockNo=-1;
+			metaHeader.filedescArray[0]=*fdroot;
+			strcpy(metaHeader.fileSystemLabel,label);
+			metaHeader.noOfFileDescriptors=1;
+			for(i=0;i<MAX_NO_OF_FILE_DESCRIPTORS;i++)
+			{
+				metaHeader.FreeList[i]=0;
+			}
+		
+			fwrite(&metaHeader,sizeof(MetaHeader),1,fp);
+			for(i=0;i<(systemSize/sizeof(Block));i++)
+			{
+				Block block;
+				fwrite(&block,sizeof(Block),1,fp);
+			}
 		}
 	}
 }
