@@ -1,0 +1,3 @@
+createvfs vfs 1024
+deletedir /transport
+
