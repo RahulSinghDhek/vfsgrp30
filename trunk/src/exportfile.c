@@ -162,24 +162,25 @@ void export_file(char path1[],char path2[]){
 						
 							str[0]=fgetc(fp1);
 					i=0;
+printf("size from export file %d\n",size);
 						
 					while(i<=size)
 						{
 						str[++i]=fgetc(fp1);
-							
+						printf("%c",str[i-1]);	
 								}
 						str[i]='\0';						
 
 					}
 							
-		
+		str[i-1]='\0';
 						
-									
-					//printf("export block no is %d\n",bno1);
-					//printf("export data %s\n",str);
+					printf("%d",size);				
+					printf("export block no is %d\n",bno1);
+					printf("export data %s\n",str);
 					
 					}
-					
+					//fclose(fp1);
 					char *fileName=NULL;
 					fileName=(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));
 					fileName=part2(path1);
@@ -193,10 +194,13 @@ void export_file(char path1[],char path2[]){
 					
 					fp=fopen(path2,"w");
 					if(fp!=NULL)	
-					fprintf(fp,"%s",str);
+						fprintf(fp,"%s",str);
+					else
+						printf("No such such file/directory\n");
 
 
-		}
+					//fclose(fp);		
+	}
 
 
 
