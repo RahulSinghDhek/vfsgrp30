@@ -1,0 +1,14 @@
+createvfs mkdir 4096
+mountvfs mkdir
+makedir /draw 2d
+makedir /draw 3d
+makedir /draw/2d circle
+makedir /draw/2d rectangle
+makedir /draw/2d/square side
+makedir /draw/2d/rectangle length
+makedir /draw/2d/rectangle breadth
+makedir /draw/3d sphere
+makedir /draw/3d cube
+makedir /draw/3d/sphere radius
+listdir /draw 1 draw
+unmountvfs mkdir

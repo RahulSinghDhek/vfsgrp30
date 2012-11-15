@@ -1,0 +1,4 @@
+mountvfs vfs2 
+makedir / vehicle
+makedir  vehicle1
+unmountvfs vfs2

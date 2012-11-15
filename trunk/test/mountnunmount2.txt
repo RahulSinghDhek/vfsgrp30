@@ -1,0 +1,2 @@
+mountvfs mount_test
+unmountvfs mount_test1

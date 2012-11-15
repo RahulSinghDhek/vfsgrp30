@@ -1,0 +1,2 @@
+createvfs mount_test1 1023000
+unmountvfs mount_test1

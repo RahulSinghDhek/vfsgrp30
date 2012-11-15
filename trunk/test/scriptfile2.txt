@@ -1,0 +1,19 @@
+createvfs vfs 1024
+mountvfs vfs
+makedir / vehicle
+makedir / transport
+makedir /vehicle 4wheeler
+makedir /vehicle 2wheeler 
+makedir /vehicle/2wheeler hero 
+makedir /transport road
+makedir /transport rail
+makedir /transport air
+makedir /transport/rail platform
+makedir /vehicle/4wheeler benz
+listdir / 1 starting
+deletedir /transport
+addfile /vehicle vehicleInfo file1
+exportfile /vehicle/vehicleInfo /home/bhat/Desktop
+copyfile /vehicle/vehicleInfo /transport/rail/platform
+exportfile /transport/rail/platform/vehicleInfo .
+listdir / 1 stop
