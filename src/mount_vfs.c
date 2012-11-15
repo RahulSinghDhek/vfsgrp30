@@ -11,21 +11,35 @@
 void mount_vfs(char label[])
 {
 	
-	FILE *fp;
+	//FILE *fp;
 	//MetaHeader metaHeader;
 	int index=0;
 	//BSTnode *rootBST;
 	int no_of_files,i;
 	char lb[MAX_FILE_SYSTEM_LABLE_SIZE];	
 	//flag=(int*)malloc(sizeof(int)); 
-	flag=ERROR_FREE;
+	//flag=ERROR_FREE;
 	
 	strcpy(lb,label);
 	strcat(lb,".dat");
-	if((fp=fopen(lb,"rb"))==NULL)		//Open binary file in read mode
+	
+	if(flag==100||flag==0)
+	{
+	flag=200;	
+	if((vfs_file=fopen(lb,"rb"))==NULL)
 	{	
-		printf("Cannot mount");
-		flag=CANNOT_CREATE_FILE;
+		flag=201;
+		printf(ERR_VFS_MOUNT_01);
+		//fclose(vfs_file);
+		return;	
+	}
+	else
+			fclose(vfs_file);
+	
+	 if((vfs_file=fopen(lb,"rb+"))==NULL)		//Open binary file in read mode
+	{	
+		printf(ERR_VFS_MOUNT_02);
+		flag=202;
 	}
 	else
 	{
@@ -35,7 +49,7 @@ void mount_vfs(char label[])
 		{
 			array[i]=NULL;
 		}	
-		fread(&mhd,sizeof(MetaHeader),1,fp);
+		fread(&mhd,sizeof(MetaHeader),1,vfs_file);
 		no_of_files=mhd.noOfFileDescriptors;
 		
 		for(i=0;i<no_of_files;i++)
@@ -54,8 +68,7 @@ void mount_vfs(char label[])
 
 			index = fun_Hash(fd->fileName[0]);
 			array[index] = insertnode(array[index], fd);
-
-			
+			flag=200;			
 		}
 	}
 	printf("\n naryTree display  :  ");	
@@ -64,5 +77,7 @@ void mount_vfs(char label[])
 	displayBST(rootBST);
 	printf("\n HTable display  :  ");
 	display_Hash();
-	printf("%s mounted\n",label);
+	//printf("%s mounted\n",label);
+
+	}
 }
