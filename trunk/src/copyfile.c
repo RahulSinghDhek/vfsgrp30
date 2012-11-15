@@ -186,8 +186,8 @@ void copy_file(char paths1[],char paths2[]){
 						
 						
 						}*/
-						//printf(" copy file block %d\n",bno1);
-						//printf("size of %d",size);
+						printf(" copy file block %d\n",bno1);
+						printf("size of %d",size);
 						fseek(fp1,sizeof(MetaHeader),SEEK_SET);
 						
 						
@@ -216,7 +216,7 @@ void copy_file(char paths1[],char paths2[]){
 					}
 					
 
-				    //printf("%s\n",str); 
+				    printf("%s\n",str); 
 					fseek(fp1,sizeof(MetaHeader),SEEK_SET);
 				       for(j=0;mhd.FreeList[j]!=0;j++);
 					fseek(fp1,j*sizeof(Block),SEEK_CUR);
@@ -247,7 +247,7 @@ void copy_file(char paths1[],char paths2[]){
 					
 					index = fun_Hash(fd1->fileName[0]);
 					array[index] = insertnode(array[index], fd1);
-					fclose(fp1);
+					//fclose(fp1);
 			
 
 		}
