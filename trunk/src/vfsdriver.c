@@ -128,28 +128,41 @@ void createvfs ( char *P1, int P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
 	create_vfs(P1,P2);
-	printf("createvfs_DONE\n");
+	if(flag!=100)
+		printf("createvfs_FAILED\n");
+	else
+		printf("createvfs_SUCCESS\n");
 }
 
 void mountvfs ( char *P1 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
 	mount_vfs(P1);
-	printf("mountvfs_DONE\n");
+	if(flag==200)
+		printf("mountvfs_DONE\n");
+	else
+		printf("mountvfs_FAILED\n");
 }
 
 void unmountvfs ( char *P1 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
 	unmount_vfs(P1);
-	printf("unmountvfs_DONE\n");
+	if(flag==300)
+		printf("unmountvfs_DONE\n");
+	else
+		printf("unmountvfs_FAILED\n");
 }
 
 void makedir ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
 	make_dir(P1,P2);
-	printf("makedir_DONE\n");
+	if(flag==200)
+		printf("makedir_DONE\n");
+	else
+		printf("makedir_FAILED\n");
+	flag=200;
 }
 
 void deletedir ( char *P1 )
