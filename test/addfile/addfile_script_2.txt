@@ -1,0 +1,3 @@
+createvfs vfs 1024
+mountvfs vfs
+addfile /home/sub2/sub4 fname /home/aamir/Desktop/vfsgrp30/svn/src/inputfile

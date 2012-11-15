@@ -1,0 +1,10 @@
+createvfs vfs 1024
+mountvfs vfs
+makedir /home/sub1 sub2
+makedir /home/sub1 sub3
+makedir /home/sub1/sub2 sub4
+addfile /home fname /home/aamir/Desktop/vfsgrp30/svn/src/inputfile
+addfile /home/sub1 fname /home/aamir/Desktop/vfsgrp30/svn/src/inputfile
+addfile /home/sub1/sub2 fname /home/aamir/Desktop/vfsgrp30/svn/src/inputfile
+addfile /home/sub1/sub2/sub4 fname /home/aamir/Desktop/vfsgrp30/svn/src/inputfile
+addfile /home fname /home/aamir/Desktop/vfsgrp30/svn/src/inputfile
