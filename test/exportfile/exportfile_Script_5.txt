@@ -1,0 +1,7 @@
+createvfs demo 1024
+mountvfs demo
+makedir /home/sub1 sub2
+makedir /home/sub1 sub3
+makedir /home/sub1/sub2 sub4
+addfile /home/sub1/sub2 fname /home/aamir/Desktop/vfsgrp30/svn/src/inputfile
+exportfile /home/sub1/sub4/fname exportfile.txt

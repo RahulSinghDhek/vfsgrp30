@@ -1,0 +1,3 @@
+createvfs vfs 1024
+exportfile /home/sub1/sub3/sub4/fname exportfile.txt
+
