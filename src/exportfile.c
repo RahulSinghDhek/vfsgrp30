@@ -88,10 +88,10 @@ char* parsePath2(char *path)
 	return pat;
 }
 
-void export_file(char path1[],char path2[]){
+int export_file(char path1[],char path2[]){
 	
 	FILE *fp,*fp1;
-	int index=0;char c;	
+	int index=0;char c;	int check=0;int j;
 	//printf("root:%s\n",naryRoot->fileDesc->fullPath);
 	int flag=ERROR_FREE;//printf("%d",flag);	
 	char path11[MAX_FULL_PATH_SIZE];
@@ -109,78 +109,65 @@ void export_file(char path1[],char path2[]){
 	 flag=iscorrectPath2(fd,naryRoot,flag);
 	//printf("%s\n",path11);
 	//printf("%d",flag);
-	if(flag!=100)
+	if(naryRoot == NULL)
+		printf(ERR_VFS_EXPORTFILE_04);	
+	
+	else if(flag ==PATH_NOT_FOUND)
 		{
-			printf(" wrong path , please enter correct path \n\n\n");
+		printf(ERR_VFS_EXPORTFILE_01);
 		}
-	else
-		{	
-			int i=0;int bno1=10;
-			int size=0;
-			
-			
-		
-									
 
-				
-				
-				if((fp1=fopen(label,"rb+"))==NULL)
+
+	else 
+
+		{	
+					int i=0;int bno1=10;
+					int size=0;char type[10];
+					if((fp1=fopen(label,"rb+"))==NULL)
 					{
 						printf("Error in opening  file\n");
 					}
 					else
 					{
+						printf("exporting....\n");
 						struct BSTnode *p=(struct BSTnode *)malloc(sizeof(struct BSTnode));
-							p=searchBST(rootBST,path1);
-						if(p!=NULL){
-						bno1=p->filedesc->locationBlockNo;
-						size=p->filedesc->fileSize;
-                                              	 }
-						// printf("%d\n",size);	
-//printf("%d\n",bno1);				
-						/*for(i=0;i<MAX_NO_OF_FILE_DESCRIPTORS;i++)
-						{
-						
-						
-
-						if(strcmp(mhd.filedescArray[i].fullPath,path1)==0)
+						p=searchBST(rootBST,path1);
+                                              //printf("\n export path : %s\n",path1);
+							if(p!=NULL){
+							bno1=p->filedesc->locationBlockNo;
+							size=p->filedesc->fileSize;
+							strcpy(type,p->filedesc->fileType);
+							int x=strcmp(type,"file");
+		                                      	if(x) 
+							printf(ERR_VFS_EXPORTFILE_03);
+							else if(x==0)
 								{
-									
-								bno1=mhd.filedescArray[i].locationBlockNo;
-							size=mhd.filedescArray[i].fileSize;
-						}
 						
-						
-						}*/
 											
-						fseek(fp1,sizeof(MetaHeader),SEEK_SET);
+									fseek(fp1,sizeof(MetaHeader),SEEK_SET);
+									fseek(fp1,bno1*sizeof(Block),SEEK_CUR);
+									str[0]=fgetc(fp1);
+									 int i=0;
 						
-							
-						fseek(fp1,bno1*sizeof(Block),SEEK_CUR);
+									while(i<=size)
+									{
+									str[++i]=fgetc(fp1);
+									
+									}
+									str[i-1]='\0';						
+									fclose(fp1);			
+									//printf(" \n %s this is from export file\n",str);
 
-							
-						
-							str[0]=fgetc(fp1);
-					i=0;
-printf("size from export file %d\n",size);
-						
-					while(i<=size)
-						{
-						str[++i]=fgetc(fp1);
-						printf("%c",str[i-1]);	
-								}
-						str[i]='\0';						
 
-					}
-							
-		str[i-1]='\0';
+
 						
-					printf("%d",size);				
-					printf("export block no is %d\n",bno1);
-					printf("export data %s\n",str);
+						
+							
+		
+									
+									
 					
-					}
-					//fclose(fp1);
+					
 					char *fileName=NULL;
 					fileName=(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));
 					fileName=part2(path1);
@@ -193,16 +180,21 @@ printf("size from export file %d\n",size);
  					strcat(path2,".txt");
 					
 					fp=fopen(path2,"w");
-					if(fp!=NULL)	
-						fprintf(fp,"%s",str);
+					if(fp==NULL)	
+					printf(ERR_VFS_EXPORTFILE_02);
 					else
-						printf("No such such file/directory\n");
+					{
+					fprintf(fp,"%s",str);printf("%s", str);
+					check=1;
+					fclose(fp);
+					}
+					}
+				}
+		}
 
-
-					//fclose(fp);		
-	}
-
-
+}
+return check;
+}
 
 
 
