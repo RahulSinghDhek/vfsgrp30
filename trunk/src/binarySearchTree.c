@@ -96,6 +96,7 @@ BSTnode * min(BSTnode * temp, int *f)
 
 void deleteBST(BSTnode *root, char filepath[])
 {
+	
 	BSTnode * ref, *tempnode, *minNode;
 	BSTnode * temp;
 	int a=0;
@@ -118,6 +119,7 @@ void deleteBST(BSTnode *root, char filepath[])
 	{
 		if(strcmp(filepath, root->filedesc->fullPath)>0)
 		{
+	
 			ref = temp;
 			temp=temp->right;
 			f=1;
@@ -170,13 +172,16 @@ void deleteBST(BSTnode *root, char filepath[])
 					ref->left=temp->left;
 				else
 					ref->right=temp->right;
+				//printf("Rahul");
 			}
 			else
 			{
+				
 				if(f==0)
 					ref->left=NULL;
 				else
 					ref->right=NULL;
+				
 			}
 			free(temp);
 			printf("\n File Path SUCCESSFULLY DELETED\n");
@@ -184,17 +189,17 @@ void deleteBST(BSTnode *root, char filepath[])
 		}
 		
 	}
+	
 }
 
 
 
 BSTnode * searchBST(BSTnode *root , char path[] )
-{
-	
+{	
 	
 	if(root==NULL)
 	{
-		printf("BST is empty");
+		//printf("BST is empty");
 		return NULL;
 	}
 	else
