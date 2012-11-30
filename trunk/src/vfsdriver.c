@@ -6,7 +6,7 @@
  * Make sure the output you display is exactly as per the given specifications for you. Do NOT print
  * any extra output (like debug messages) in the final version of your driver program. You can use this driver program
  * in a in incremental manner as you keep implementing one operator after another. For operators not yet implemented,
- * you can leave the output as given ("TO_BE_DONE"). So you can use this program as your "main" program for testing purposes.
+ * you can leave the output as given ("TO_BE_SUCCESS"). So you can use this program as your "main" program for testing purposes.
  *
  * DO NOT write the full code for operators in the driver program! You must only CALL your functions from here.
  *
@@ -84,42 +84,129 @@ int main( int argc, char *argv[] )
 void processcommand( char *command, char *P1, char *P2, char *P3 )
 {
 	if( strcmp(command, "createvfs") == 0 ){
-		int size = atoi(P2);
-		createvfs (P1,size);
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+			
+			printf(ERR_VFS_CREATE_00);
+		}	
+		else
+		{
+			int size = atoi(P2);
+			createvfs (P1,size);
+		}	
 	}
 	else if( strcmp(command, "mountvfs") == 0 )
-		mountvfs (P1);
+		if(strcmp(P1,"")==0){
+			
+			printf(ERR_VFS_MOUNT_00);
+		}
+		else
+			mountvfs (P1);
 	else if( strcmp(command, "unmountvfs") == 0 )
-		unmountvfs (P1);
+		if(strcmp(P1,"")==0){
+
+			printf(ERR_VFS_UNMOUNT_00);
+		}	
+		else
+			unmountvfs(P1);
 	else if( strcmp(command, "makedir") == 0 )
-		makedir (P1,P2);
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+
+			printf(ERR_VFS_MAKEDIR_00);
+		}
+		else
+			makedir (P1,P2);
 	else if( strcmp(command, "deletedir") == 0 )
-		deletedir (P1);
+		if(strcmp(P1,"")==0){
+
+			printf(ERR_VFS_DELETEDIR_00);
+		}
+		else
+			deletedir (P1);		
 	else if( strcmp(command, "movedir") == 0 )
-		movedir (P1,P2);
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+
+			printf(ERR_VFS_MOVEDIR_00);
+		}
+		else   
+			movedir (P1,P2);
+		
 	else if( strcmp(command, "listdir") == 0 ){
-		//printf("in listdir:%s",command);
-		int flag = atoi(P2);
-		listdir (P1,flag,P3);
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+
+			printf(ERR_VFS_LISTDIR_00);
+		}
+		else   
+		{
+			int flag = atoi(P2);
+			listdir (P1,flag,P3);
+		}
 	}
-	else if( strcmp(command, "addfile") == 0 )
-		addfile (P1,P2,P3);
-	else if( strcmp(command, "listfile") == 0 )
-		listfile (P1,P2);
-	else if( strcmp(command, "updatefile") == 0 )
-		updatefile (P1,P2);
+	else if( strcmp(command, "addfile") == 0 ){
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0||strcmp(P3,"")==0){
+
+			printf(ERR_VFS_ADDFILE_00);
+		}
+		else  
+			addfile (P1,P2,P3);		
+		}
+	else if( strcmp(command, "listfile") == 0 ){
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+
+			printf(ERR_VFS_LISTFILE_00);
+		}	
+		else  
+			listfile (P1,P2);		
+		}
+		
+	else if( strcmp(command, "updatefile") == 0 ){
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+
+			printf(ERR_VFS_UPDATEFILE_00);
+		}	
+		else 
+			updatefile (P1,P2);
+		}
 	else if( strcmp(command, "removefile") == 0 ){
-		printf("in removefile");
-		removefile (P1);
-	}
-	else if( strcmp(command, "movefile") == 0 )
-		movefile (P1,P2);
-	else if( strcmp(command, "copyfile") == 0 )
-		copyfile (P1,P2);
-	else if( strcmp(command, "exportfile") == 0 )
-		exportfile (P1,P2);
-	else if( strcmp(command, "searchfile") == 0 )
-		searchfile (P1,P2);
+		if(strcmp(P1,"")==0){
+
+			printf(ERR_VFS_REMOVEFILE_00);
+		}	
+		else 
+			removefile (P1);
+		}	
+	else if( strcmp(command, "movefile") == 0 ){
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+
+			printf(ERR_VFS_MOVEFILE_00);
+		}
+		else  
+			movefile (P1,P2);		
+		}
+	else if( strcmp(command, "copyfile") == 0 ){
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+
+			printf(ERR_VFS_COPYFILE_00);
+		}
+		else  
+			copyfile (P1,P2);
+		}			
+	else if( strcmp(command, "exportfile") == 0 ){
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+
+			printf(ERR_VFS_EXPORTFILE_00);
+		}
+		else  
+			exportfile (P1,P2);	
+		}	
+	else if( strcmp(command, "searchfile") == 0 ){
+		if(strcmp(P1,"")==0||strcmp(P2,"")==0){
+
+			printf(ERR_VFS_SEARCHFILE_00);
+		}	
+		else  
+			searchfile (P1,P2);
+		}	
+		
 	else
 		printf("Ignoring invalid command %s\n", command);
 }
@@ -127,121 +214,117 @@ void processcommand( char *command, char *P1, char *P2, char *P3 )
 void createvfs ( char *P1, int P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	create_vfs(P1,P2);
-	if(flag!=100)
-		printf("createvfs_FAILED\n");
-	else
-		printf("createvfs_SUCCESS\n");
+	if(create_vfs(P1,P2))
+		printf("createvfs_SUCCESS\n");		
 }
 
 void mountvfs ( char *P1 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	mount_vfs(P1);
-	if(flag==200)
-		printf("mountvfs_DONE\n");
-	else
-		printf("mountvfs_FAILED\n");
+	if(mount_vfs(P1))
+		printf("mountvfs_SUCCESS\n");
 }
 
 void unmountvfs ( char *P1 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	unmount_vfs(P1);
-	if(flag==300)
-		printf("unmountvfs_DONE\n");
-	else
-		printf("unmountvfs_FAILED\n");
+	if(unmount_vfs(P1))
+		printf("unmountvfs_SUCCESS\n");
 }
 
 void makedir ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	make_dir(P1,P2);
-	if(flag==200)
-		printf("makedir_DONE\n");
-	else
-		printf("makedir_FAILED\n");
-	flag=200;
+	if((strcmp(P1,"/")!=0) && (P1[strlen(P1)-1]=='/'))
+		P1[strlen(P1)-1]='\0';
+	if(make_dir(P1,P2))
+		printf("makedir_SUCCESS\n");	
 }
 
 void deletedir ( char *P1 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	delete_dir(P1);
-	printf("deletedir_DONE\n");
+	if((strcmp(P1,"/")!=0) && (P1[strlen(P1)-1]=='/'))
+		P1[strlen(P1)-1]='\0';
+	if(del_dir_new(P1))
+		printf("deletedir_SUCCESS\n");
 }
 
 void movedir ( char *P1, char *P2 )
-{	char *temp;
-	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	temp = move_dir(P1,P2);	
-	printf("movedir_DONE %s\n",temp);
+{	/* Call the appropriate function with given arguments and display appropriate output on the screen */
+	if((strcmp(P1,"/")!=0) && (P1[strlen(P1)-1]=='/'))
+		P1[strlen(P1)-1]='\0';
+	if((strcmp(P2,"/")!=0) && (P2[strlen(P2)-1]=='/'))
+		P2[strlen(P2)-1]='\0';
+	if(move_dir(P1,P2))	
+		printf("movedir_SUCCESS\n");	
 }
 
 void listdir ( char *P1, int P2, char *P3 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	//printf("in driver");
-	listdirs(P1,P2,P3);
-	printf("listdir_DONE\n");
+	if((strcmp(P1,"/")!=0) && (P1[strlen(P1)-1]=='/'))
+		P1[strlen(P1)-1]='\0';
+	if(listdirs(P1,P2,P3))
+		printf("listdir_SUCCESS\n");
 }
 
 void addfile ( char *P1, char *P2, char *P3 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("in driver:%s",P1);
-	addFile(P1,P2,P3);
-	printf("addfile_DONE\n");
+	if((strcmp(P1,"/")!=0) && (P1[strlen(P1)-1]=='/'))
+		P1[strlen(P1)-1]='\0';
+	if(addFile(P1,P2,P3))
+		printf("addfile_SUCCESS\n");
 }
 
 void listfile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	listFile (P1,P2);
-	printf("listfile_DONE\n");
+	if(listFile (P1,P2))
+		printf("listfile_SUCCESS\n");
 }
 
 void updatefile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	updateFile(P1,P2);
-	printf("updatefile_DONE\n");
-}
+	if(updateFile(P1,P2))
+		printf("updatefile_SUCCESS\n");
+}	
 
 void removefile ( char *P1 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("bfore removefile");
-	removeFile(P1);
-	printf("removefile_DONE\n");
+	if(rmv_file(P1))
+		printf("removefile_SUCCESS\n");	
 }
 
 void movefile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	move_file(P1,P2);	
-	printf("movefile_TO_BE_DONE\n");
+	if(move_file(P1,P2))	
+		printf("movefile_SUCCESS\n");
 }
 
 void copyfile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	copy_file(P1,P2);
-	printf("copyfile_DONE\n");
+	if(copy_file(P1,P2))
+		printf("copyfile_SUCCESS\n");
 }
 
 void exportfile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	export_file(P1,P2);
-	printf("exportfile_DONE at:%s\n",P2);
+	if(export_file(P1,P2))
+		printf("exportfile_SUCCESS\n");
 }
 
 void searchfile ( char *P1, char *P2 )
 {
 	/* Call the appropriate function with given arguments and display appropriate output on the screen */
-	printf("searchfile_TO_BE_DONE\n");
+	if(searchFile(P1,P2))
+		printf("searchfile_SUCCESS\n");		
 }
 
 

@@ -4,51 +4,52 @@
 #include "list.h"
 #include "vfs.h"
 #include "commands.h"
-#define TEMP_SIZE 10
-void unmount_vfs(char label[])
-{
-	//printf("%s unmounted\n",label);
-	char temp[TEMP_SIZE];	
+
+int unmount_vfs(char label[])
+{	char temp[MAX_FILE_SYSTEM_LABLE_SIZE];	
 	FileDescriptor filedescArray[MAX_NO_OF_FILE_DESCRIPTORS];
-	//strcpy(temp,label);
-	//strcat(temp,".dat");	//add path
-	int i,count=0;
-	//MetaHeader metaHeader;
-	//FILE *fp;
-	/*if((fp=fopen(temp,"rb+"))==NULL)		//Open binary file in write mode
-	{	
-		printf("Cannot create file");
-		flag=CANNOT_CREATE_FILE;
-	}*/
-	//else
-	//{
+	int i,count=0, check =0;
 
+	FILE *fp;
 
-		if(flag!=200)
-		{
-			printf(ERR_VFS_UNMOUNT_02);
-			flag=302;
-		}
-		else if(strcmp(mhd.fileSystemLabel,label)!=0)
-			{
-				printf(ERR_VFS_UNMOUNT_01);
-				flag=301;
-			}		
+	if(strlen(label) > MAX_FILE_SYSTEM_LABLE_SIZE)
+		printf(ERR_VFS_UNMOUNT_01);		//DATA_FILE_NOT_FOUND
+	else
+	{
+		strcpy(temp,label);
+		strcat(temp,".dat");	//add path
+	
+
+		if(naryRoot == NULL || strcmp(mhd.fileSystemLabel,label) )
+			printf(ERR_VFS_UNMOUNT_03);		//VFS_NOT_MOUNTED
+		else if((fp=fopen(temp,"rb+"))==NULL)
+			printf(ERR_VFS_UNMOUNT_01);		//DATA_FILE_NOT_FOUND
 		else
-		{
-		flag=300;	
-		saveToArray(naryRoot,filedescArray,&count);
-		//strcpy(mhd.fileSystemLabel,label);
-		mhd.noOfFileDescriptors=count;
-		for(i=0;i<count;i++){
+		{	saveToArray(naryRoot,filedescArray,&count);
+
+			mhd.noOfFileDescriptors=count;
+
+			for(i=0;i<count;i++){
 				mhd.filedescArray[i]=filedescArray[i];
-		}		
-		if(fwrite(&mhd,sizeof(MetaHeader),1,vfs_file)==0)
-		{
-			printf(ERR_VFS_UNMOUNT_03);
-			flag=303;
+				//printf("\nin unmount:%s\n",filedescArray[i].fullPath);
+			}
+				
+			if(fwrite(&mhd,sizeof(MetaHeader),1,fp)==0)
+				printf(ERR_VFS_UNMOUNT_02);		//CANNOT_WRITE_TO_FILE
+			else
+			{
+				//printf("\n naryTree display after unmount : \n");	
+				//displayNAry(naryRoot);
+				//printf("\n BSTree display  : \n ");
+				//displayBST(rootBST);
+				check = 1;
+				naryRoot=NULL;
+				rootBST=NULL;
+				flag=ERROR_FREE;
+			}
 		}
 	}
-	//fclose(vfs_file);
+
+return check;
 }
 	
