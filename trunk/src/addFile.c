@@ -11,7 +11,7 @@ int addFile(char directoryPath[], char fileName[], char sourceFilePath[])
 {
 	FILE *fp,*fp1;
 	FileDescriptor *fd;
-	fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));	
+	
 	int index=0,check=0;
 	char sourcePath[MAX_FULL_PATH_SIZE],path2[MAX_FULL_PATH_SIZE];;
 	char c;
@@ -39,6 +39,8 @@ int addFile(char directoryPath[], char fileName[], char sourceFilePath[])
 		strcpy(label,mhd.fileSystemLabel);
 		strcat(label,".dat");
 		//printf("label:%s",label);
+		
+		//if(fp != NULL)fclose(fp);
 		fp = fopen(sourcePath, "r");
 		if(fp==NULL)
 		{
@@ -49,8 +51,8 @@ int addFile(char directoryPath[], char fileName[], char sourceFilePath[])
 		sizeOfSource = ftell(fp);
 		fseek(fp, 0, SEEK_SET);
 		if(sizeOfSource>1024)
-		{
-			//fclose(fp);
+		{	//if(fp != NULL)
+			//	fclose(fp);
 			printf(ERR_VFS_ADDFILE_06);			//FILE_TOO_LARGE
 				return check;	
 		}
@@ -63,7 +65,8 @@ int addFile(char directoryPath[], char fileName[], char sourceFilePath[])
 		
 		}
 		str[i]='\0';
-		fclose(fp);
+		//if(fp != NULL)
+			fclose(fp);
 		//printf("str:%s",str);
 		if((fp1=fopen(label,"rb+"))==NULL)
 		{
@@ -76,7 +79,8 @@ int addFile(char directoryPath[], char fileName[], char sourceFilePath[])
 			fseek(fp1,j*sizeof(Block),SEEK_CUR);
 			if(!(fwrite(str,i*sizeof(char),1,fp1)))
 			{
-				//fclose(fp1);
+				//if(fp1 != NULL)
+				//	fclose(fp1);
 				printf(ERR_VFS_ADDFILE_05);		//CANNOT_WRITE_TO_DATAFILE	
  				return check;
 			}				
@@ -84,37 +88,19 @@ int addFile(char directoryPath[], char fileName[], char sourceFilePath[])
 		}
 		strcat(directoryPath,"/");
 		strcat(directoryPath,fileName);
-	//	printf("dirPath:%s",directoryPath);
+		fd=(FileDescriptor*)malloc(sizeof(FileDescriptor));	
 		strcpy(fd->fileName,fileName);
 		strcpy(fd->fullPath,directoryPath);
 		strcpy(fd->fileType,"file");
 		fd->fileSize=i;
 		fd->locationBlockNo=j;
-		//printf("\n locationBlock no is %d \n ",j);
 		blocks_written=j+1;
 		naryRoot=insertNAry(fd,naryRoot,&flag);
 		rootBST=insertBST(rootBST,fd,&flag);
 		index = fun_Hash(fd->fileName[0]);
 		array[index] = insertnode(array[index], fd);
 		check=1;
-		fclose(fp1);
-		//-----------------------------------reading----------------------------------
-		/*if((fp=fopen(label,"rb+"))==NULL)		//Open binary file in read mode
-		{	
-			printf("Cannot mount");
-			flag=CANNOT_CREATE_FILE;
-		}
-		else
-		{
 		
-			fseek(fp1,sizeof(MetaHeader),SEEK_SET);
-			for(j=0;mhd.FreeList[j]!=1;j++);
-			fseek(fp1,j*sizeof(Block),SEEK_SET);
-			fread(str,i*sizeof(char),1,fp1);
-			printf("string read:%s",str);
-			//mhd.FreeList[j]=1;
-		}
-		fclose(fp);*/
 	}
 	return check;
 }
