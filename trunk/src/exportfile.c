@@ -125,11 +125,11 @@ int export_file(char path1[],char path2[]){
 					int size=0;char type[10];
 					if((fp1=fopen(label,"rb+"))==NULL)
 					{
-						printf("Error in opening  file\n");
+						//printf("Error in opening  file\n");
 					}
 					else
 					{
-						printf("exporting....\n");
+						//printf("exporting....\n");
 						struct BSTnode *p=(struct BSTnode *)malloc(sizeof(struct BSTnode));
 						p=searchBST(rootBST,path1);
                                               //printf("\n export path : %s\n",path1);
@@ -184,7 +184,7 @@ int export_file(char path1[],char path2[]){
 					printf(ERR_VFS_EXPORTFILE_02);
 					else
 					{
-					fprintf(fp,"%s",str);printf("%s", str);
+					fprintf(fp,"%s",str);//printf("%s", str);
 					check=1;
 					fclose(fp);
 					}

@@ -54,5 +54,6 @@ int create_vfs(char label[],long systemSize)
 			check = 1;
 		}
 	}
+	
 	return check;
 }
