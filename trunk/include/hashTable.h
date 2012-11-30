@@ -1,4 +1,4 @@
-//In struct, name is of fixed size,
+	//In struct, name is of fixed size,
 //#define HASH_TAB 27
 //#include "list.h"
 //#include "vfs.h"
@@ -20,8 +20,10 @@ NODE *insertnode(NODE *, FileDescriptor *);
 
 int fun_Hash(char);
 
-void searchFile(char []);
+//int searchFile(char [], char []);
 
-void searchFile_internal(NODE *, char []);
+int searchFile_internal(NODE *, char [], char []);
 
 void display_Hash();
+
+NODE * deletenode(NODE *start, FileDescriptor *fDesc);
