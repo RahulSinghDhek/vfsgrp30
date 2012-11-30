@@ -15,6 +15,6 @@ typedef struct BSTnode BSTnode;
 struct BSTnode * insertBST(struct BSTnode * , FileDescriptor * , int *);
 void displayBST(BSTnode *);
 BSTnode * getBSTNode();
-//void delete(node *root, char []);
+void deleteBST(BSTnode *root, char filepath[]);
 BSTnode * searchBST(BSTnode *root , char path[] );
-BSTnode * min(BSTnode *);
+BSTnode * min(BSTnode * temp, int *f);
