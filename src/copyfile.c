@@ -231,7 +231,7 @@ FileDescriptor *fd2;
 	struct dirNode *parent;
 	char temp_path[MAX_FULL_PATH_SIZE];
 	char *path_part;
-	path_part==(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));	
+	path_part=(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));	
 	strcpy(temp_path,fd2->fullPath);
 	//strcpy(path_part,parsePath(temp_path));
 	//printf("%s\n",temp_path);		
