@@ -5,12 +5,12 @@
 #include "vfs.h"
 
 #include "hashTable.h"
-
+#define size 2
 
 											//1D hashing
 NODE *insertnode(NODE *start, FileDescriptor *fd)
 {	
-	NODE *temp,*ptr;
+	NODE *ptr;
 
 	ptr = create(fd);
 	/*int i;
@@ -24,7 +24,7 @@ NODE *insertnode(NODE *start, FileDescriptor *fd)
 	strcpy(ptr->fullPath,str_path);
 		//Store the file name and Fullpath in the node... and insert it in the write location..
 	*/
-	if(start==NULL)
+	/*if(start==NULL)
 		start=ptr;
 	else
 	{	temp=start;									//shorting shd be applied here afterwards
@@ -33,31 +33,92 @@ NODE *insertnode(NODE *start, FileDescriptor *fd)
 			temp=temp->next;
 		}
 		temp->next=ptr;
-	}
-	return start;
+	}*/
+	return attach(start, ptr);
 }
 
-void searchFile(char name_File[])
-{	int index = fun_Hash(name_File[0]);
-	if(array[index] == NULL)				//Global object shd be used to access the array item
+int searchFile(char name_File[], char outFile[])
+{	//NODE *headFile = NULL;
+	int index = fun_Hash(name_File[0]);
+	/*if(array[index] == NULL)				//Global object shd be used to access the array item
 		printf("0 Files Found. Search Ended...\n");	
 	else if(index == -1)
 		printf("Invalid file name\n");
 	else
-		searchFile_internal(array[index],name_File);	//Global object shd be used to access the array item
+		headFile = */ 
+return	searchFile_internal(array[index], name_File, outFile);	//Global object shd be used to access the array item
+
+	//return headFile;
+//return check;
 }
 
-void searchFile_internal(NODE *start, char name_File[])
-{	int count = 0;	
-	while(start!=NULL)
-	{	if (strcmp(((FileDescriptor *)(start->data))->fileName,name_File)==0)
-		{	printf("Loc: %s\n",((FileDescriptor *)(start->data))->fullPath);
-			count++;
+int searchFile_internal(NODE *start, char name_File[], char outFile[])
+{	//int count = 0;
+	int check = 0, cnt_File = 0, cnt_Dir = 0;
+	NODE *temp, *tmpFile, *tmpDir;	
+	NODE *headFile[2]={} , *ptr = NULL;
+	int len = strlen(name_File);
+	FILE *fp;
+
+	//headFile = (NODE **)malloc(size * sizeof(NODE *));
+	//NODE *headFile[2]={};
+	
+	if(naryRoot==NULL)
+		printf(ERR_VFS_SEARCHFILE_02);					//VFS_NOT_MOUNTED
+	else
+	{	temp = start;
+		fp=fopen(outFile,"w");
+		while(temp!=NULL)
+		{	if (strncmp( ((FileDescriptor *)(temp->data))->fileName ,name_File, len)==0 )
+			{	ptr = create(((FileDescriptor *)(temp->data)));
+				if( strcmp( ((FileDescriptor *)(temp->data))->fileType, "dir") )
+				{	headFile[0] = attach(headFile[0], ptr);
+					cnt_File++;
+				}
+				else
+				{	headFile[1] = attach(headFile[1], ptr);
+					cnt_Dir++;
+				}
+			
+				//printf("Loc: %s\n",((FileDescriptor *)(temp->data))->fullPath);
+				//count++;
+			}
+			temp = temp->next;
 		}
-		start = start->next;
+		if(fp != NULL)
+		{	fprintf(fp,"%d Files Found\n",cnt_File);
+			tmpFile = headFile[0];
+			tmpDir = headFile[1];
+			while(tmpFile != NULL)
+			{	fprintf(fp,"%s\n", ((FileDescriptor *)(tmpFile->data))->fullPath);
+				tmpFile = tmpFile->next;
+			}
+			fprintf(fp,"\n%d Folders Found\n",cnt_Dir);
+			while(tmpDir != NULL)
+			{	fprintf(fp,"%s\n", ((FileDescriptor *)(tmpDir->data))->fullPath);
+				tmpDir = tmpDir->next;
+			}
+			check = 1;
+		}
 	}
-	printf("%d Files Found. Search Ended...\n",count);
+return check;
 }
+
+NODE * deletenode(NODE *start, FileDescriptor *fDesc)		// node is the node which is to be removed
+{	NODE *temp, *prev= start;
+	temp = start;
+	while(temp!=NULL && ((FileDescriptor *)(temp->data)) != fDesc) 
+	{	prev = temp;
+		temp=temp->next; 	// move the pointer up to that node
+	}
+	
+	if(temp == start) 
+	{	start = temp->next;
+	} 
+	else
+		prev->next = temp->next;
+return start;
+}          
 
 int fun_Hash(char FirstAlpha)
 {	int hashFunc =-1;
@@ -93,58 +154,3 @@ void display_Hash()						//Global object shd be used to access the array item
 		}
 	}
 }
-
-/*int main()
-{	
-	char nameFile[], pathFile[];
-	int index = 0;
-
-	//reads from the file descriptor.
-
-
-
-	//call hash fun
-	index = fun_Hash(nameFile[0]);
-
-	//call create a node funtion and gets its address.
-	array[index] = insertnode(array[index],nameFile,pathFile);
-
-
-	struct hash_link *array[5]={};									//change it to 26 or some value afterwards...
-	char input[50]; 
-	struct hash_link *temp;
-	//char chk[]='-1';
-	int i;
-	
-	//do{
-	/*	for(i=0; i<5; i++){		
-		printf("\nEnter a name of file or press -1 to terminate :");
-		scanf("%s",input);
-		//if(!strcmp(input,chk))
-		//{	
-		switch (input[0])
-			{
-			case ('a'):	array[0]=insertnode(array[0],input);
-						break;
-			case ('b'):	array[1]=insertnode(array[1],input);
-						break;
-			case ('c'):	array[2]=insertnode(array[2],input);
-						break;
-			case ('d'):	array[3]=insertnode(array[3],input);
-						break;
-			}
-	//}
-		}
-
-	return 1;
-}
-	
-*/
-
-
-
-
-
-
-
-
