@@ -11,20 +11,20 @@
 #define FALSE 0
 #define MAX_DIR 10
 
-#define ERR_VFS_MOVEDIR_01 "CANNOT_FIND_SPECIFIED_SOURCEDIR"
-#define ERR_VFS_MOVEDIR_02 "CANNOT_FIND_SPECIFIED_DESTINATIONDIR"
+//#define ERR_VFS_MOVEDIR_01 "CANNOT_FIND_SPECIFIED_SOURCEDIR"
+//#define ERR_VFS_MOVEDIR_02 "CANNOT_FIND_SPECIFIED_DESTINATIONDIR"
 //--hv to do dis on driver file..#define ERR_VFS_MOVEDIR_03 "SOURCE_PATH_MISSING"
 //--hv to do dis on driver file..#define ERR_VFS_MOVEDIR_04 "DESTINATION_PATH_MISSING"
-#define ERR_VFS_MOVEDIR_05 "DESTINATION_ALREADY_HAVE_SOURCE_DIR"
+//#define ERR_VFS_MOVEDIR_05 "DESTINATION_ALREADY_HAVE_SOURCE_DIR"
 
 char* parse_Path(char *path)
 {
 	int l,i,j=0,dec=1,k=0;
 	char *temp;
-	char *pat;
-	pat=(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));
+	//char *pat;
+	//pat=(char*)malloc(sizeof(MAX_FULL_PATH_SIZE));
 	char tokens[MAX_DIR][MAX_FULL_PATH_SIZE];
-	temp=(char*)malloc(sizeof(10));			//CHAGE IT
+	temp=(char*)malloc(sizeof(char) * MAX_FULL_PATH_SIZE);			//CHAGE IT
 	l=strlen(path);
 	for(i=1;i<l;i++)
 	{		
@@ -99,18 +99,12 @@ int del_dir_new(char path[])
 	{	subRoot = rmvFrmSrcNode(path, dec);
 		if(subRoot == NULL)
 			check = 1;
-		/*if(subRoot->firstChild->firstChild != NULL)
-			printf(ERR_VFS_DELETEDIR_02);				//DIRECTORY_IS_NOT_EMPTY	
-		else
-		{	temp = subRoot->firstChild;
-			subRoot->firstChild = subRoot->firstChild->rightSibling;
-		}*/
 	}
 return check;
 }
 
 int rmv_file(char path[])
-{	int check=0, dec=1;
+{	int check=0, dec=1,index;
 	BSTnode *source_path;
 	struct dirNode *subRoot;
 	
@@ -127,6 +121,13 @@ int rmv_file(char path[])
 		if(subRoot != NULL)
 		{	mhd.noOfFileDescriptors--;
 			mhd.FreeList[subRoot->fileDesc->locationBlockNo]=0;
+			
+			rootBST=NULL;
+			constructBST(naryRoot);
+			
+			index =  fun_Hash(subRoot->fileDesc->fileName[0]);
+			array[index] = deletenode(array[index], subRoot->fileDesc);
+
 			check = 1;
 		}
 	}
@@ -238,7 +239,12 @@ void addToDestNode(struct dirNode *subRoot, char dest_dir_path[])
 }
 
 void changeFD(struct dirNode *subRoot, char dest_dir_path[])
-{	char newPath[MAX_FULL_PATH_SIZE];
+{	int i=0;
+	char *newPath;
+	newPath =(char *)malloc(sizeof(char) * MAX_FULL_PATH_SIZE);
+	for(i=0; i<MAX_FULL_PATH_SIZE ;i++)
+		newPath[i]='\0';
+	
 	if(subRoot != NULL)
 	{	strcpy(newPath, dest_dir_path);
 		if(strcmp(dest_dir_path,"/")!=0)
@@ -271,7 +277,8 @@ int move_dir (char source_dir_path[],char dest_dir_path[])
 	char tmp[MAX_FULL_PATH_SIZE]="";
 	
 	if(naryRoot == NULL)
-	{	printf(ERR_VFS_MOVEDIR_08);				//VFS_NOT_MOUNTED
+	{
+		printf(ERR_VFS_MOVEDIR_08);				//VFS_NOT_MOUNTED
 		return check;
 	}
 
@@ -286,19 +293,19 @@ int move_dir (char source_dir_path[],char dest_dir_path[])
 	if (source_path == NULL)
 		printf(ERR_VFS_MOVEDIR_01);				//CANNOT_FIND_SPECIFIED_SOURCEDIR
 	else if(source_path != NULL && strcmp(source_path->filedesc->fileType,"dir"))
-			printf(ERR_VFS_MOVEDIR_04);			//SOURCE_CANNOT_BE_FILE
-	else if (dest_path == NULL)
+		printf(ERR_VFS_MOVEDIR_04);			//SOURCE_CANNOT_BE_FILE
+	else if (dest_path == NULL)	
 		printf(ERR_VFS_MOVEDIR_02);				//CANNOT_FIND_SPECIFIED_DESTINATIONDIR
 	else if(dest_path != NULL && strcmp(dest_path->filedesc->fileType,"dir"))
-			printf(ERR_VFS_MOVEDIR_07);			//DESTINATION_CANNOT_BE_FILE
+		printf(ERR_VFS_MOVEDIR_07);			//DESTINATION_CANNOT_BE_FILE
 	else
 	{	if(strstr(dest_dir_path, source_dir_path)!=NULL)
 			printf(ERR_VFS_MOVEDIR_06); 				//CANNOT_MOVE_PARENT_TO_CHILD_DIR
 		else if(checkSrcExistsInDest(source_dir_path, tmp))
 			printf(ERR_VFS_MOVEDIR_05);				//DESTINATION_ALREADY_HAVE_SOURCE_DIR
 		else
-		{
-			subRoot = rmvFrmSrcNode(source_dir_path,dec);
+		{	subRoot = rmvFrmSrcNode(source_dir_path,dec);
+			
 			addToDestNode(subRoot, dest_dir_path);
 			changeFD(subRoot, dest_dir_path);
 			rootBST=NULL;
