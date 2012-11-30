@@ -1,3 +1,4 @@
+//changed on 28th Nov,2012
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -7,7 +8,7 @@
 #include "nAryTree.h"
 
 
-struct dirNode *tempRoot=NULL;
+struct dirNode *tempRoot;
 void displayNonRecursive(struct dirNode* root,FILE *fp)
 {
 	if(root!=NULL)
@@ -31,7 +32,7 @@ struct dirNode* searchNary(struct dirNode* root,char src_path[])
 {
 	if(root!=NULL){
 		if(strcmp(root->fileDesc->fullPath,src_path)==0){
-			printf("%s",root->fileDesc->fileName);
+			//printf("%s",root->fileDesc->fileName);
 			tempRoot=root;
 		}
 		searchNary(root->rightSibling,src_path);
@@ -39,56 +40,43 @@ struct dirNode* searchNary(struct dirNode* root,char src_path[])
 	}	
 }
 
-/*struct dirNode* searchNary(struct dirNode* root,char source_dir_path[])
+int listdirs(char src_path[],int flag,char dest_path[])
 {
-	struct dirNode *curr=NULL;
-	curr = root;
-	int exitStatus;
-	struct dirNode *parent;
-	
-		exitStatus=FALSE;
-		parent=naryRoot;
-		while(exitStatus==FALSE)
-		{	
-			if(strstr(source_dir_path,parent->fileDesc->fullPath)==NULL)
-			{	parent=parent->rightSibling;
-				curr = parent;	
-			}
-			else
-			{	if(strcmp(source_dir_path,parent->fileDesc->fullPath)==0)
-					return curr;
-				else
-				{	parent=parent->firstChild;
-					curr = parent;
-				}
-			}
-		}
-}*/
-
-void listdirs(char src_path[],int flag,char dest_path[])
-{
-	FILE *fptr;
-	fptr=fopen(dest_path,"w");
-	if(fptr==NULL)
-		printf("Cannot open file");
+	//printf("\n naryTree display at begining :  ");	
+	//displayNAry(naryRoot);	
+	tempRoot=NULL;
+	int check=0;
+	if(naryRoot==NULL)
+		printf(ERR_VFS_LISTDIR_03);	//VFS_NOT_MOUNTED
+	else if(!(flag==0||flag==1))
+		printf(ERR_VFS_LISTDIR_02);	//INVALID_FLAG
 	else
 	{
-		//struct dirNode *tempRoot;
-		//tempRoot=
-		searchNary(naryRoot,src_path);
-		if(tempRoot==NULL)
-			printf("\nNo file found\n");
+		FILE *fptr;
+		fptr=fopen(dest_path,"w");
+		if(fptr==NULL)
+			printf(ERR_VFS_LISTDIR_04);	//CANNOT_CREATE_OUTPUTFILE
 		else
 		{
-			tempRoot=tempRoot->firstChild;
-			if(tempRoot!=NULL&&flag==0)
-				displayNonRecursive(tempRoot,fptr);
+			searchNary(naryRoot,src_path);
+			if(tempRoot==NULL)
+				printf(ERR_VFS_LISTDIR_01);	//CANNOT_FIND_SPECIFIED_PATH_OR_DIR	
 			else
-			if(tempRoot!=NULL&&flag==1)
-				displayRecursive(tempRoot,fptr);
-			else
-				printf("ERROR:Path not found");
-		}
-	}	
+			{
+				tempRoot=tempRoot->firstChild;	
+				if(tempRoot!=NULL&&flag==0)
+				{	check=1;
+					displayNonRecursive(tempRoot,fptr);
+				}
+				else if(tempRoot!=NULL&&flag==1)
+				{	displayRecursive(tempRoot,fptr);
+					check=1;
+				}
+				else
+					printf(ERR_VFS_LISTDIR_01);	//CANNOT_FIND_SPECIFIED_PATH_OR_DIR
+			}		     
+		}	
+	}
+	return check;	
 }
-
+	
