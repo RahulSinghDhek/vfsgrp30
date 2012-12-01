@@ -33,7 +33,7 @@ int delete_dir(char path[])
 	
 	
 	if(naryRoot == NULL)
-	{
+	{	printf("deletedir_FAILURE ");
 		printf(ERR_VFS_DELETEDIR_04);                                                           
 		
 		//**********************************VFS NOT MOUNTED**********************************//
@@ -53,7 +53,7 @@ int delete_dir(char path[])
 		
 	//***********************************PATH NOT VALID IF ROOT IS NULL********************************//
 		if(root == NULL)		
-		{
+		{	printf("deletedir_FAILURE ");
 			printf(ERR_VFS_DELETEDIR_01);	
 			
 				                                       
@@ -188,7 +188,7 @@ int delete_dir(char path[])
 	
 			exitStatus=FALSE; 
 			if(temp->firstChild==NULL)
-			{
+			{	printf("deletedir_FAILURE ");
 				printf(ERR_VFS_DELETEDIR_01);	
 				
 					
@@ -224,7 +224,7 @@ int delete_dir(char path[])
 						}
 					
 						else
-						{
+						{	printf("deletedir_FAILURE ");
 							printf(ERR_VFS_DELETEDIR_02);	
 							
 								                    
@@ -247,7 +247,7 @@ int delete_dir(char path[])
 					while(exitStatus==FALSE)
 					{
 						if(temp1->rightSibling==NULL)
-						{
+						{	printf("deletedir_FAILURE ");
 							printf(ERR_VFS_DELETEDIR_01);	
 							
 								                  
@@ -283,7 +283,7 @@ int delete_dir(char path[])
 									}
 							
 									else
-									{
+									{	printf("deletedir_FAILURE ");
 										printf(ERR_VFS_DELETEDIR_02);  
 										
 										     
